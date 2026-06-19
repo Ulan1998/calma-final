@@ -1,26 +1,64 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colors */
+  --color-bg:        #FFFDF8;
+  --color-surface:   #F5F0E6;
+  --color-border:    #E8DDD0;
+  --color-text:      #1C1412;
+  --color-muted:     #7A6B5D;
+  --color-accent:    #8B4513;
+  --color-accent-lt: #C49A6C;
+  --color-gold:      #C9A84C;
+
+  /* Inverted dark sections */
+  --color-ink:       #161009;
+  --color-ink-text:  #EDE3D4;
+
+  /* Type scale */
+  --text-hero: clamp(3.25rem, 1.5rem + 7vw, 9rem);
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 600ms;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+/* Lamination motif — thin layered dough lines used as dividers / texture */
+.lamination {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--color-gold) 38%, transparent) 0px,
+    color-mix(in srgb, var(--color-gold) 38%, transparent) 1px,
+    transparent 1px,
+    transparent 7px
+  );
+}
+
+.lamination-rule {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    var(--color-gold),
+    color-mix(in srgb, var(--color-gold) 0%, transparent)
+  );
 }
