@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CONFIG } from '@/lib/config'
+import { CloseIcon, CheckIcon } from '@/components/ui/icons'
 
 type Status = 'loading' | 'qr' | 'paid' | 'error'
 
@@ -102,8 +103,9 @@ export function QrPaymentModal({ orderId, totalTypyn, orderNumber, onClose, onPa
           <button
             onClick={handleClose}
             className="absolute top-4 right-4 text-[#7A6B5D] hover:text-[#1C1412] w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#F5F0E6] transition-colors"
+            aria-label="Закрыть"
           >
-            ✕
+            <CloseIcon />
           </button>
 
           {status === 'loading' && (
@@ -175,8 +177,8 @@ export function QrPaymentModal({ orderId, totalTypyn, orderNumber, onClose, onPa
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: 'spring', stiffness: 200, damping: 18 }}
             >
-              <div className="w-16 h-16 rounded-full bg-green-50 border-2 border-green-500 flex items-center justify-center text-2xl">
-                ✓
+              <div className="w-16 h-16 rounded-full bg-green-50 border-2 border-green-500 flex items-center justify-center text-green-600">
+                <CheckIcon width={30} height={30} />
               </div>
               <h3
                 className="text-2xl text-[#1C1412]"
@@ -198,8 +200,8 @@ export function QrPaymentModal({ orderId, totalTypyn, orderNumber, onClose, onPa
 
           {status === 'error' && (
             <div className="flex flex-col items-center gap-4 py-4 text-center">
-              <div className="w-14 h-14 rounded-full bg-red-50 border border-red-200 flex items-center justify-center text-2xl">
-                ✕
+              <div className="w-14 h-14 rounded-full bg-red-50 border border-red-200 flex items-center justify-center text-red-500">
+                <CloseIcon width={24} height={24} />
               </div>
               <p className="text-[#1C1412] font-medium">Что-то пошло не так</p>
               <p className="text-sm text-[#7A6B5D]">{error}</p>

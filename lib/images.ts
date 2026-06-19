@@ -24,7 +24,7 @@ export const productImages: ReadonlyArray<string> = [
   "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&q=80",
   "https://images.unsplash.com/photo-1623334044303-241021148842?w=800&q=80",
   "https://images.unsplash.com/photo-1568051243858-533a607809a5?w=800&q=80",
-  "https://images.unsplash.com/photo-1620921575116-fb8902865891?w=800&q=80",
+  "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&q=80",
   "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?w=800&q=80",
   "https://images.unsplash.com/photo-1509365465985-25d11c17e812?w=800&q=80",
 ];

@@ -6,6 +6,8 @@ import { useCart } from '@/lib/cart-context'
 import { QrPaymentModal } from '@/components/ui/QrPaymentModal'
 import { CONFIG } from '@/lib/config'
 import { fadeUp } from '@/lib/motion'
+import { isValidKGPhone } from '@/lib/validate-phone'
+import { CloseIcon, CroissantIcon } from '@/components/ui/icons'
 
 type FormState = 'idle' | 'submitting' | 'qr' | 'success'
 
@@ -19,7 +21,8 @@ export function OrderSection() {
   const [orderNumber, setOrderNumber] = useState('')
   const [error, setError] = useState('')
 
-  const canSubmit = items.length > 0 && name.trim().length > 1 && phone.trim().length >= 9
+  const phoneValid = isValidKGPhone(phone)
+  const canSubmit = items.length > 0 && name.trim().length > 1 && phoneValid
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -101,7 +104,9 @@ export function OrderSection() {
             >
               {items.length === 0 ? (
                 <div className="bg-[#FFFDF8] border border-[#E8DDD0] rounded-2xl p-10 text-center">
-                  <p className="text-4xl mb-4">🥐</p>
+                  <div className="flex justify-center mb-4 text-[#C49A6C]">
+                    <CroissantIcon width={48} height={48} />
+                  </div>
                   <p className="text-[#7A6B5D]">Корзина пуста</p>
                   <a
                     href="#catalog"
@@ -117,7 +122,9 @@ export function OrderSection() {
                       key={item.product.id}
                       className="bg-[#FFFDF8] border border-[#E8DDD0] rounded-xl p-4 flex items-center gap-4"
                     >
-                      <span className="text-2xl shrink-0">🥐</span>
+                      <span className="shrink-0 text-[#C49A6C]">
+                        <CroissantIcon width={28} height={28} />
+                      </span>
 
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-[#1C1412] truncate">{item.product.name}</p>
@@ -152,9 +159,10 @@ export function OrderSection() {
 
                       <button
                         onClick={() => remove(item.product.id)}
-                        className="text-[#E8DDD0] hover:text-red-400 transition-colors shrink-0 ml-1"
+                        className="text-[#C9BDB5] hover:text-red-400 transition-colors shrink-0 ml-1"
+                        aria-label="Удалить позицию"
                       >
-                        ✕
+                        <CloseIcon width={16} height={16} />
                       </button>
                     </div>
                   ))}
@@ -213,8 +221,12 @@ export function OrderSection() {
                     onChange={e => setPhone(e.target.value)}
                     placeholder="+996 500 000 000"
                     required
+                    aria-invalid={phone.trim().length > 0 && !phoneValid}
                     className="w-full bg-white border border-[#E8DDD0] rounded-xl px-4 py-3 text-sm text-[#1C1412] placeholder-[#C9BDB5] focus:outline-none focus:ring-2 focus:ring-[#8B4513]/20 focus:border-[#8B4513] transition"
                   />
+                  {phone.trim().length > 0 && !phoneValid && (
+                    <p className="text-xs text-red-500">Введите номер в формате +996 5XX XXXXXX</p>
+                  )}
                 </div>
 
                 <div className="space-y-1">

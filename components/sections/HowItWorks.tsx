@@ -4,73 +4,112 @@ import { motion } from 'framer-motion'
 import { fadeUp, stagger } from '@/lib/motion'
 
 const steps = [
-  { num: '01', title: 'Выберите продукты', desc: 'Просмотрите каталог, добавьте нужные позиции в корзину.' },
-  { num: '02', title: 'Оформите заказ', desc: 'Укажите имя и телефон — менеджер уточнит детали доставки.' },
-  { num: '03', title: 'Оплатите QR-кодом', desc: 'Сканируйте QR через mBank или O!Банк. Оплата за секунды.' },
-  { num: '04', title: 'Получите доставку', desc: 'Доставим на следующий день с соблюдением холодовой цепочки.' },
+  { num: '01', title: 'Заявка', desc: 'Выберите позиции в каталоге и оставьте контакты — менеджер подтвердит заказ.' },
+  { num: '02', title: 'Доставка', desc: 'Привозим замороженное тесто на следующий день с холодовой цепочкой.' },
+  { num: '03', title: 'Выпечка', desc: 'Выпекаете ровно столько, сколько нужно гостям — без списаний.' },
+  { num: '04', title: 'Подача', desc: 'Свежая выпечка с хрустящей корочкой к каждому открытию.' },
 ]
 
 export function HowItWorks() {
   return (
-    <section id="how" className="py-24 md:py-32 bg-[#FFFDF8]">
-      <div className="max-w-6xl mx-auto px-4 md:px-8">
+    <section id="how" className="relative overflow-hidden bg-[var(--color-ink)] text-[var(--color-ink-text)] py-24 md:py-32">
+      <div aria-hidden className="lamination absolute inset-0 opacity-[0.05] pointer-events-none" />
 
+      <div className="relative max-w-6xl mx-auto px-4 md:px-8">
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="mb-16"
+          className="mb-16 md:mb-20"
         >
-          <span className="text-xs uppercase tracking-[0.2em] text-[#8B4513] font-medium">Процесс</span>
+          <span className="text-xs uppercase tracking-[0.22em] text-[var(--color-gold)] font-medium">
+            02 — Процесс
+          </span>
           <h2
-            className="mt-3 text-[#1C1412] font-light"
-            style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.02em', fontSize: 'clamp(2rem, 1rem + 3vw, 3.5rem)' }}
+            className="mt-3 font-light"
+            style={{
+              fontFamily: 'var(--font-display)',
+              letterSpacing: '-0.02em',
+              fontSize: 'clamp(2rem, 1rem + 3vw, 3.5rem)',
+            }}
           >
             Как заказать
           </h2>
         </motion.div>
 
-        <motion.div
-          variants={stagger(0.12)}
+        <motion.ol
+          variants={stagger(0.14)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="relative grid grid-cols-1 md:grid-cols-4 gap-x-8 gap-y-12"
         >
-          {steps.map((step, i) => (
-            <motion.div key={i} variants={fadeUp} className="relative">
-              {i < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-7 left-full w-full h-px border-t border-dashed border-[#E8DDD0] z-0 translate-x-3" />
-              )}
-              <div className="relative z-10 p-6 bg-[#F5F0E6] border border-[#E8DDD0] rounded-2xl h-full">
-                <p className="text-4xl text-[#E8DDD0] mb-4 font-light select-none" style={{ fontFamily: 'var(--font-display)' }}>
-                  {step.num}
-                </p>
-                <h3 className="text-lg text-[#1C1412] mb-2 font-light" style={{ fontFamily: 'var(--font-display)' }}>
+          {/* Horizontal connecting rail (desktop) */}
+          <div
+            aria-hidden
+            className="hidden md:block absolute top-[2.4rem] left-[12%] right-[12%] h-px"
+            style={{
+              background:
+                'linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-gold) 55%, transparent) 12%, color-mix(in srgb, var(--color-gold) 55%, transparent) 88%, transparent)',
+            }}
+          />
+          {/* Vertical rail (mobile) */}
+          <div
+            aria-hidden
+            className="md:hidden absolute top-4 bottom-4 left-[1.6rem] w-px"
+            style={{
+              background:
+                'linear-gradient(180deg, color-mix(in srgb, var(--color-gold) 50%, transparent), transparent)',
+            }}
+          />
+
+          {steps.map(step => (
+            <motion.li
+              key={step.num}
+              variants={fadeUp}
+              className="relative flex md:flex-col gap-5 md:gap-0 md:text-center md:items-center"
+            >
+              <span
+                className="relative z-10 shrink-0 inline-flex items-center justify-center text-[var(--color-gold)] font-light bg-[var(--color-ink)] md:mb-6"
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: 'clamp(2.5rem, 1.5rem + 2vw, 3.75rem)',
+                  lineHeight: 1,
+                  minWidth: '3.25rem',
+                }}
+              >
+                {step.num}
+              </span>
+              <div className="md:max-w-[15rem]">
+                <h3
+                  className="text-xl mb-2 font-light"
+                  style={{ fontFamily: 'var(--font-display)' }}
+                >
                   {step.title}
                 </h3>
-                <p className="text-sm text-[#7A6B5D] leading-relaxed">{step.desc}</p>
+                <p className="text-sm leading-relaxed text-[var(--color-ink-text)]/70">
+                  {step.desc}
+                </p>
               </div>
-            </motion.div>
+            </motion.li>
           ))}
-        </motion.div>
+        </motion.ol>
 
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="mt-12 text-center"
+          className="mt-16 md:mt-20 md:text-center"
         >
           <a
             href="#catalog"
-            className="inline-flex items-center gap-2 bg-[#8B4513] text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#C49A6C] transition-colors duration-150"
+            className="inline-flex items-center gap-2 bg-[var(--color-gold)] text-[var(--color-ink)] px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#d8ba60] transition-colors duration-150"
           >
             Начать заказ →
           </a>
         </motion.div>
-
       </div>
     </section>
   )

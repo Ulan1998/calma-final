@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '@/lib/cart-context'
 import { CONFIG } from '@/lib/config'
+import { CartIcon } from '@/components/ui/icons'
 
 const links = [
   { label: 'Каталог', href: '#catalog' },
@@ -66,7 +67,7 @@ export function Navbar() {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: 'spring', stiffness: 260, damping: 20 }}
             >
-              🛒
+              <CartIcon />
               <span>{count} шт</span>
             </motion.a>
           )}

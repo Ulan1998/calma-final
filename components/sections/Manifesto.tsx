@@ -8,7 +8,7 @@ import { bakeryImage } from '@/lib/images'
 export function Manifesto() {
   return (
     <section
-      id="about"
+      id="manifesto"
       className="relative overflow-hidden bg-[var(--color-ink)] text-[var(--color-ink-text)]"
     >
       {/* Background bakery photo, duotone-dimmed */}
