@@ -38,6 +38,7 @@ export const metadata: Metadata = {
     siteName: 'CALMA',
     locale: 'ru_KG',
     type: 'website',
+    images: [{ url: 'https://calma.kg/hero-poster.jpg', width: 1200, height: 630, alt: 'CALMA — замороженная выпечка для кафе Бишкека' }],
   },
   robots: {
     index: true,

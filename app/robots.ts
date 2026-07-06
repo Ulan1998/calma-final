@@ -5,6 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
+      disallow: ['/baker-test', '/mascots-demo', '/preview'],
     },
     sitemap: 'https://calma.kg/sitemap.xml',
     host: 'https://calma.kg',
