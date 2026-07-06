@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import type { ReactNode } from 'react'
 
-type Variant = 'primary' | 'secondary' | 'ghost'
+type Variant = 'primary' | 'secondary' | 'ghost' | 'onLight' | 'onDark'
 
 type Props = {
   children: ReactNode
@@ -22,6 +22,10 @@ const styles: Record<Variant, string> = {
     'border border-[#8B4513] text-[#8B4513] hover:bg-[#F5F0E6] px-7 py-3.5 rounded-full text-sm font-medium tracking-wide transition-colors duration-150',
   ghost:
     'text-[#7A6B5D] hover:text-[#1C1412] text-sm font-medium transition-colors duration-150',
+  onLight:
+    'bg-white text-[#161009] hover:bg-[#F5F0E6] px-7 py-3.5 rounded-full text-sm font-medium tracking-wide transition-colors duration-150',
+  onDark:
+    'border border-white/70 text-white hover:border-white hover:bg-white/10 px-7 py-3.5 rounded-full text-sm font-medium tracking-wide transition-colors duration-150',
 }
 
 export function Button({ children, variant = 'primary', onClick, type = 'button', disabled, className = '', href }: Props) {

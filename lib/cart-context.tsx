@@ -17,12 +17,19 @@ type CartContextType = {
   total: number
   totalTypyn: number
   count: number
+  cartOpen: boolean
+  openCart: () => void
+  closeCart: () => void
 }
 
 const CartContext = createContext<CartContextType | null>(null)
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
+  const [cartOpen, setCartOpen] = useState(false)
+
+  const openCart = useCallback(() => setCartOpen(true), [])
+  const closeCart = useCallback(() => setCartOpen(false), [])
 
   const add = useCallback((product: Product) => {
     setItems(prev => {
@@ -53,7 +60,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const count = items.reduce((s, i) => s + i.qty, 0)
 
   return (
-    <CartContext.Provider value={{ items, add, remove, setQty, clear, total, totalTypyn, count }}>
+    <CartContext.Provider value={{ items, add, remove, setQty, clear, total, totalTypyn, count, cartOpen, openCart, closeCart }}>
       {children}
     </CartContext.Provider>
   )

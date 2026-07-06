@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, DM_Sans } from 'next/font/google'
+import { Cormorant_Garamond, Montserrat, Caveat } from 'next/font/google'
+import ReactDOM from 'react-dom'
 import './globals.css'
-import { CustomCursor } from '@/components/ui/CustomCursor'
 import { SmoothScroll } from '@/components/ui/SmoothScroll'
 
 const cormorant = Cormorant_Garamond({
@@ -10,22 +10,33 @@ const cormorant = Cormorant_Garamond({
   weight: ['300', '400', '500', '600'],
 })
 
-const dmSans = DM_Sans({
+const montserrat = Montserrat({
   variable: '--font-body',
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '600', '700', '800'],
+})
+
+const caveat = Caveat({
+  variable: '--font-script',
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '700'],
 })
 
 export const metadata: Metadata = {
-  title: 'CALMA — Замороженные круассаны',
-  description: 'Свежие круассаны для кафе, ресторанов и отелей Бишкека. Производство CALMA.',
+  title: 'CALMA — Замороженные круассаны для HoReCa в Бишкеке',
+  description: 'B2B поставщик замороженных круассанов для кафе, ресторанов и отелей Бишкека. Собственное производство, доставка на следующий день, QR-оплата.',
+}
+
+export function generateStaticParams() {
+  return []
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  ReactDOM.preload('/hero-poster.jpg', { as: 'image', fetchPriority: 'high' })
+  ReactDOM.preload('/hero.mp4', { as: 'video', fetchPriority: 'high' })
   return (
-    <html lang="ru" className={`${cormorant.variable} ${dmSans.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-[#FFFDF8] text-[#1C1412] cursor-none">
-        <CustomCursor />
+    <html lang="ru" className={`${cormorant.variable} ${montserrat.variable} ${caveat.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col" style={{ background: '#111', color: '#222' }}>
         <SmoothScroll>
           {children}
         </SmoothScroll>

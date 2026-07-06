@@ -1,0 +1,65 @@
+import Image from 'next/image'
+
+const ROW1 = [1,2,3,4,5,6,7,8,16,18]
+const ROW2 = [9,10,11,12,13,14,15,17,19,1]
+
+// Doubled for seamless infinite loop (each row is 50% of full width)
+const TRACK1 = [...ROW1, ...ROW1]
+const TRACK2 = [...ROW2, ...ROW2]
+
+export function Clients() {
+  return (
+    <section
+      aria-label="Нашу продукцию выбирают заведения HoReCa Бишкека"
+      className="py-8 px-0"
+      style={{ background: 'var(--color-bg)' }}
+    >
+      <h2
+        className="font-body font-bold text-center mb-5 px-5"
+        style={{ color: '#2B211D', fontSize: 'clamp(1.45rem, 5.5vw, 1.85rem)', lineHeight: 1.22, letterSpacing: '-0.025em' }}
+      >
+        Нам доверяют
+      </h2>
+
+      <div className="flex flex-col gap-3 overflow-hidden mx-[-20px]">
+        {/* Row 1 — forward */}
+        <div className="clients-track-1 flex" style={{ width: 'max-content' }}>
+          {TRACK1.map((n, i) => (
+            <div
+              key={i}
+              className="shrink-0 mx-2 rounded-full bg-white overflow-hidden flex items-center justify-center"
+              style={{ width: 80, height: 80, border: '1px solid #E2D7C8', boxShadow: '0 4px 12px rgba(0,0,0,0.06)' }}
+            >
+              <Image
+                src={`/logos/${n}.png`}
+                alt=""
+                width={80}
+                height={80}
+                className="w-full h-full object-contain"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Row 2 — reverse */}
+        <div className="clients-track-2 flex" style={{ width: 'max-content' }}>
+          {TRACK2.map((n, i) => (
+            <div
+              key={i}
+              className="shrink-0 mx-2 rounded-full bg-white overflow-hidden flex items-center justify-center"
+              style={{ width: 80, height: 80, border: '1px solid #E2D7C8', boxShadow: '0 4px 12px rgba(0,0,0,0.06)' }}
+            >
+              <Image
+                src={`/logos/${n}.png`}
+                alt=""
+                width={80}
+                height={80}
+                className="w-full h-full object-contain"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

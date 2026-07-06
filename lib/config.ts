@@ -4,13 +4,14 @@ export const CONFIG = {
   PAYMENTS_URL: 'https://calma-payments-production.up.railway.app',
   WHATSAPP: 'https://wa.me/996500547727',
   PHONE: '+996 500 547 727',
+  INSTAGRAM: 'https://instagram.com/calma.kg',
   ADDRESS: 'Бишкек, Кыргызстан',
 }
 
 export type Product = {
   id: string
   name: string
-  description: string
+  description?: string
   price: number      // сомы — для отображения
   priceTypyn: number // тыыны — для xPay
   unit: string
@@ -18,7 +19,45 @@ export type Product = {
   badge?: string
 }
 
-// TODO: замените id на реальные UUID из calma-erp (таблица Product)
+export const PRODUCT_SKU: Record<string, string> = {
+  'plain-micro':        'PLAIN-MICRO',
+  'plain-mini':         'PLAIN-MINI',
+  'plain-mid':          'PLAIN-MID',
+  'plain-big':          'PLAIN-BIG',
+  'plain-xl':           'PLAIN-XL',
+  'filled-micro':       'FILL-MICRO',
+  'chocolate':          'CHOC',
+  'hotdog':             'HOTDOG',
+  'curd-berry':         'CURD-BERRY',
+  'vanilla':            'VANILLA',
+  'curd':               'CURD',
+  'curd-orange':        'CURD-ORG',
+  'soup-borsch':        'SOUP-BORSCH',
+  'soup-solyanka':      'SOUP-SOL',
+  'soup-lentil':        'SOUP-LENTIL',
+  'soup-pea':           'SOUP-PEA',
+  'soup-chicken':       'SOUP-CHICK',
+  'soup-anti':          'SOUP-ANTI',
+  'soup-tomyam':        'SOUP-TOMYAM',
+  'dough-viennese':     'DOUGH-VIEN',
+  'dough-napoleon':     'DOUGH-NAP',
+  'ice-pistachio':      'ICE-PIST',
+  'ice-raspberry':      'ICE-RASP',
+  'ice-strawberry':     'ICE-STRAW',
+  'ice-chocolate':      'ICE-CHOC',
+  'ice-cream':          'ICE-CREAM',
+  'ice-caramel':        'ICE-CARAM',
+  'ice-talkan':         'ICE-TALKAN',
+  'samsa-mini-meat':    'SAMSA-M-MEAT',
+  'samsa-mini-chicken': 'SAMSA-M-CHICK',
+  'samsa-mini-cs':      'SAMSA-M-CS',
+  'samsa-puff-meat':    'SAMSA-P-MEAT',
+  'samsa-puff-chicken': 'SAMSA-P-CHICK',
+  'samsa-puff-cs':      'SAMSA-P-CS',
+  'quiche-chicken':     'QUICHE-CHICK',
+  'quiche-salmon':      'QUICHE-SAL',
+}
+
 export const PRODUCTS: Product[] = [
   {
     id: '1',

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="400" height="200">
+  <rect width="1200" height="600" fill="#1a1209"/>
+  <circle cx="900" cy="300" r="120" fill="#8B4513" opacity="0.4"/>
+  <text x="900" y="315" text-anchor="middle" fill="white" font-size="80" font-weight="300" font-family="sans-serif">Л</text>
+  <rect x="50" y="80" width="700" height="120" rx="16" fill="white" opacity="0.05"/>
+  <text x="400" y="160" text-anchor="middle" fill="white" font-size="60" font-weight="300" font-family="sans-serif">сцена: Лео + поднос</text>
+  <text x="900" y="480" text-anchor="middle" fill="#8B4513" font-size="28" font-family="sans-serif">scene/footer</text>
+</svg>

@@ -85,13 +85,21 @@ export function CardIcon({ width = 28, height = 28, ...rest }: IconProps) {
   )
 }
 
-/** Croissant — used in empty cart */
+/** Croissant — used in empty cart / cart items */
 export function CroissantIcon({ width = 40, height = 40, ...rest }: IconProps) {
   return (
     <svg width={width} height={height} {...base} {...rest}>
-      <path d="M4 16c2-1 4-1 6 0M14 16c2-1 4-1 6 0" />
-      <path d="M3 17c3-6 5-8 9-8s6 2 9 8c-3-1-6-1-9 0s-6 1-9 0z" />
-      <path d="M12 9V5" />
+      {/* outer arc */}
+      <path d="M4 17.5 C2.5 13.5 3.5 8 7 5.5 C10 3.5 14 3.5 17 5.5 C20.5 8 21.5 13.5 20 17.5" />
+      {/* bottom arc closing the crescent */}
+      <path d="M4 17.5 C5.5 19.5 8.5 21 12 21 C15.5 21 18.5 19.5 20 17.5" />
+      {/* left tip */}
+      <path d="M4 17.5 C3 18.5 1.5 19 2 20.5" />
+      {/* right tip */}
+      <path d="M20 17.5 C21 18.5 22.5 19 22 20.5" />
+      {/* score marks */}
+      <line x1="10" y1="6.5" x2="8.5" y2="16" strokeWidth="1" />
+      <line x1="14" y1="6.5" x2="15.5" y2="16" strokeWidth="1" />
     </svg>
   )
 }

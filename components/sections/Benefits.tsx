@@ -1,130 +1,302 @@
 'use client'
 
-import type { ReactNode } from 'react'
-import { motion } from 'framer-motion'
-import { fadeUp, stagger } from '@/lib/motion'
-import { FactoryIcon, TruckIcon, BoxIcon, CardIcon } from '@/components/ui/icons'
+import { useRef, useState, useEffect, useCallback } from 'react'
+import { motion, useMotionValue, animate } from 'framer-motion'
+import type { PanInfo } from 'framer-motion'
 
-type Benefit = {
-  icon: ReactNode
-  title: string
-  description: string
-  /** bento span + visual emphasis */
-  span: string
-  feature?: boolean
-  accent?: boolean
-}
+const GAP = 14
+const TOTAL = 6
+const START = TOTAL // middle copy starts at idx 6 in the triple array
 
-const benefits: Benefit[] = [
+const BENEFITS = [
   {
-    icon: <FactoryIcon width={36} height={36} />,
-    title: 'Собственное производство',
-    description:
-      'Производим в Бишкеке и контролируем каждый этап — от замеса теста до шоковой заморозки. Стабильное качество без посредников и наценок.',
-    span: 'sm:col-span-2 sm:row-span-2',
-    feature: true,
+    title: 'Снижаете затраты на персонал',
+    text: 'Не требуется профессиональный пекарь — процесс освоит любой сотрудник за один день.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
+        <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+      </svg>
+    ),
   },
   {
-    icon: <TruckIcon width={28} height={28} />,
-    title: 'Доставка по Бишкеку',
-    description: 'Привозим заказ на следующий день, сохраняя холодовую цепочку.',
-    span: 'sm:col-span-2',
+    title: 'Забудьте про списания',
+    text: 'Храните до 3 месяцев. Берёте ровно столько, сколько нужно — без лишних потерь.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+    ),
   },
   {
-    icon: <BoxIcon width={28} height={28} />,
-    title: 'Гибкие объёмы',
-    description: 'Подбираем объём под ваш трафик — от кофейни до отеля.',
-    span: '',
+    title: 'Расширяете меню без крупных затрат',
+    text: 'Круассаны, супы, тесто, мороженое, самсы, киш — широкий ассортимент замороженных позиций.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
+        <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+        <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+      </svg>
+    ),
   },
   {
-    icon: <CardIcon width={28} height={28} />,
-    title: 'Оплата за секунды',
-    description: 'QR-оплата через mBank и O!Банк прямо на сайте. Без переводов и поездок в офис.',
-    span: '',
-    accent: true,
+    title: 'Удобная логистика',
+    text: 'Доставляем на авто-морозилках по Бишкеку и в регионы. Бесплатная доставка от 7 кг.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
+        <rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/>
+        <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+      </svg>
+    ),
+  },
+  {
+    title: 'Работаем официально',
+    text: 'Предоставляем действующие декларации соответствия ЕАЭС и все документы о качестве.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
+      </svg>
+    ),
+  },
+  {
+    title: 'Полный пакет документов',
+    text: 'Счета на оплату, ЭСФ и вся необходимая бухгалтерская документация для юрлиц и ИП.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+      </svg>
+    ),
   },
 ]
 
-export function Benefits() {
-  return (
-    <section id="about" className="py-24 md:py-32 bg-[#F5F0E6]">
-      <div className="max-w-6xl mx-auto px-4 md:px-8">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="mb-16 grid grid-cols-1 md:grid-cols-2 gap-10 items-end"
-        >
-          <div>
-            <span className="text-xs uppercase tracking-[0.2em] text-[#8B4513] font-medium">
-              Почему CALMA
-            </span>
-            <h2
-              className="mt-3 text-[#1C1412] font-light"
-              style={{
-                fontFamily: 'var(--font-display)',
-                letterSpacing: '-0.02em',
-                fontSize: 'clamp(2rem, 1rem + 3vw, 3.5rem)',
-              }}
-            >
-              Для тех, кто ценит
-              <br />
-              <em className="not-italic text-[#8B4513]">надёжность</em>
-            </h2>
-          </div>
-          <p className="text-[#7A6B5D] leading-relaxed">
-            Мы не просто поставщик. Мы партнёр вашего заведения — помогаем стабильно
-            подавать качественную выпечку без лишних хлопот.
-          </p>
-        </motion.div>
+// Triple the array: [copy1 | copy2(start) | copy3]
+const EXTENDED = [...BENEFITS, ...BENEFITS, ...BENEFITS]
 
+export function Benefits() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [cw, setCw] = useState(340)
+  const [idx, setIdx] = useState(START)
+  const x = useMotionValue(0)
+  const hasMeasured = useRef(false)
+  const teleportTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const measure = () => {
+      const w = el.clientWidth
+      if (!hasMeasured.current) {
+        const cw0 = w
+        const cardW0 = cw0 * 0.82
+        x.set(-(START * (cardW0 + GAP)))
+        hasMeasured.current = true
+      }
+      setCw(w)
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [x])
+
+  const cardW = cw * 0.82
+  const step = cardW + GAP
+  const sidepad = (cw - cardW) / 2
+
+  const clearTeleport = useCallback(() => {
+    if (teleportTimer.current) {
+      clearTimeout(teleportTimer.current)
+      teleportTimer.current = null
+    }
+  }, [])
+
+  const snapTo = useCallback((targetIdx: number) => {
+    clearTeleport()
+    const clamped = Math.min(Math.max(targetIdx, 0), EXTENDED.length - 1)
+
+    animate(x, -(clamped * step), {
+      type: 'spring',
+      stiffness: 260,
+      damping: 26,
+      mass: 0.85,
+    })
+    setIdx(clamped)
+
+    // After spring settles, silently teleport back to the middle copy
+    const visualIdx = ((clamped - START) % TOTAL + TOTAL) % TOTAL
+    const middleIdx = START + visualIdx
+    if (clamped !== middleIdx) {
+      teleportTimer.current = setTimeout(() => {
+        x.set(-(middleIdx * step))
+        setIdx(middleIdx)
+        teleportTimer.current = null
+      }, 660)
+    }
+  }, [x, step, clearTeleport])
+
+  const onDragStart = useCallback(() => {
+    clearTeleport()
+  }, [clearTeleport])
+
+  const onDragEnd = useCallback((_e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    const { offset, velocity } = info
+    if (velocity.x < -300 || offset.x < -(cardW * 0.28)) {
+      snapTo(idx + 1)
+    } else if (velocity.x > 300 || offset.x > cardW * 0.28) {
+      snapTo(idx - 1)
+    } else {
+      snapTo(idx)
+    }
+  }, [idx, cardW, snapTo])
+
+  // Visual index 0–5 for dots and counter
+  const activeVisual = ((idx - START) % TOTAL + TOTAL) % TOTAL
+
+  return (
+    <section aria-labelledby="benefits-heading" style={{ background: 'var(--color-bg)', paddingTop: 16, paddingBottom: 28 }}>
+
+      <motion.h2
+        id="benefits-heading"
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.55 }}
+        className="font-script text-center"
+        style={{ fontSize: '2rem', fontStyle: 'italic', color: '#ab2b02', margin: 0, padding: '0 20px' }}
+      >
+        Почему выбирают нас
+      </motion.h2>
+
+      <div style={{ marginTop: 16, marginBottom: 24, overflow: 'hidden' }}>
+        <video autoPlay muted playsInline loop preload="auto"
+          style={{ width: '480%', height: 'auto', display: 'block' }}>
+          <source src="/animations/test50.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      {/* Drag carousel */}
+      <div ref={containerRef} style={{ overflow: 'hidden' }}>
         <motion.div
-          variants={stagger(0.1)}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-1 sm:grid-cols-4 sm:auto-rows-[minmax(180px,auto)] gap-4 md:gap-5"
+          drag="x"
+          style={{ x, display: 'flex', gap: GAP, paddingLeft: sidepad, paddingRight: sidepad }}
+          dragConstraints={{ right: 0, left: -((EXTENDED.length - 1) * step) }}
+          dragElastic={0.06}
+          dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
+          onDragStart={onDragStart}
+          onDragEnd={onDragEnd}
+          whileDrag={{ cursor: 'grabbing' }}
         >
-          {benefits.map((b, i) => (
-            <BenefitTile key={i} {...b} />
-          ))}
+          {EXTENDED.map((b, i) => {
+            const dist = Math.abs(i - idx)
+            const isActive = dist === 0
+            const isAdjacent = dist === 1
+
+            return (
+              <motion.div
+                key={`${i}`}
+                animate={{
+                  scale: isActive ? 1 : isAdjacent ? 0.93 : 0.86,
+                  opacity: isActive ? 1 : isAdjacent ? 0.68 : 0.35,
+                  y: isActive ? 0 : isAdjacent ? 6 : 14,
+                }}
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                style={{
+                  width: cardW,
+                  flexShrink: 0,
+                  background: '#fff',
+                  borderRadius: 22,
+                  padding: '0 20px 24px',
+                  border: `1px solid ${isActive ? 'rgba(171,43,2,0.22)' : 'var(--color-border)'}`,
+                  boxShadow: isActive
+                    ? '0 12px 40px rgba(171,43,2,0.13), 0 2px 8px rgba(0,0,0,0.05)'
+                    : '0 2px 8px rgba(0,0,0,0.04)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  cursor: 'grab',
+                }}
+              >
+                {/* Top accent bar fades in on active */}
+                <motion.div
+                  animate={{ opacity: isActive ? 1 : 0, scaleX: isActive ? 1 : 0.4 }}
+                  transition={{ duration: 0.28 }}
+                  style={{
+                    position: 'absolute', top: 0, left: 0, right: 0, height: 3,
+                    background: 'linear-gradient(90deg, #ab2b02 0%, rgba(171,43,2,0.3) 100%)',
+                    borderRadius: '22px 22px 0 0',
+                    transformOrigin: 'left',
+                  }}
+                />
+
+                {/* Ghost number */}
+                <span aria-hidden="true" style={{
+                  position: 'absolute', top: 10, right: 14,
+                  fontSize: '5.5rem', fontWeight: 800, lineHeight: 1,
+                  color: 'rgba(171,43,2,0.07)',
+                  fontFamily: 'var(--font-body)',
+                  pointerEvents: 'none', userSelect: 'none',
+                  letterSpacing: '-0.04em',
+                }}>
+                  {String((i % TOTAL) + 1).padStart(2, '0')}
+                </span>
+
+                {/* Icon */}
+                <div style={{ paddingTop: 22, marginBottom: 14 }}>
+                  <div style={{ width: 40, height: 40, color: '#ab2b02' }}>{b.icon}</div>
+                </div>
+
+                {/* Title */}
+                <p className="font-body" style={{
+                  fontSize: '1.08rem', fontWeight: 700, lineHeight: 1.28,
+                  color: 'var(--color-text)', margin: '0 0 10px', letterSpacing: '-0.01em',
+                }}>
+                  {b.title}
+                </p>
+
+                {/* Body */}
+                <p className="font-body" style={{
+                  fontSize: '0.875rem', lineHeight: 1.7,
+                  color: 'var(--color-muted)', margin: 0,
+                }}>
+                  {b.text}
+                </p>
+              </motion.div>
+            )
+          })}
         </motion.div>
       </div>
+
+      {/* Counter + animated dots */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginTop: 18 }}>
+        <span className="font-body" style={{
+          fontSize: '0.7rem', fontWeight: 600, color: 'rgba(171,43,2,0.5)',
+          letterSpacing: '0.06em', minWidth: 32, textAlign: 'right',
+        }}>
+          {String(activeVisual + 1).padStart(2, '0')}
+        </span>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+          {BENEFITS.map((_, i) => (
+            <motion.button
+              key={i}
+              onClick={() => snapTo(START + i)}
+              aria-label={`Перейти к слайду ${i + 1}`}
+              animate={{
+                width: i === activeVisual ? 22 : 5,
+                backgroundColor: i === activeVisual ? '#ab2b02' : 'rgba(171,43,2,0.2)',
+              }}
+              transition={{ type: 'spring', stiffness: 420, damping: 34 }}
+              style={{ height: 5, borderRadius: 99, border: 'none', padding: 0, cursor: 'pointer', flexShrink: 0 }}
+            />
+          ))}
+        </div>
+
+        <span className="font-body" style={{
+          fontSize: '0.7rem', fontWeight: 600, color: 'rgba(171,43,2,0.3)',
+          letterSpacing: '0.06em', minWidth: 32,
+        }}>
+          {String(TOTAL).padStart(2, '0')}
+        </span>
+      </div>
     </section>
-  )
-}
-
-function BenefitTile({ icon, title, description, span, feature, accent }: Benefit) {
-  const surface = accent
-    ? 'bg-[var(--color-accent)] text-white border-transparent'
-    : 'bg-[#FFFDF8] text-[#1C1412] border-[#E8DDD0]'
-
-  return (
-    <motion.article
-      variants={fadeUp}
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.2 }}
-      className={`${span} ${surface} border rounded-2xl p-7 md:p-8 flex flex-col`}
-    >
-      <span
-        className={`block ${accent ? 'text-white/90' : 'text-[#8B4513]'} ${feature ? 'mb-6' : 'mb-5'}`}
-      >
-        {icon}
-      </span>
-      <h3
-        className={`font-light ${feature ? 'text-2xl md:text-3xl mb-3' : 'text-lg mb-2'}`}
-        style={{ fontFamily: 'var(--font-display)' }}
-      >
-        {title}
-      </h3>
-      <p
-        className={`text-sm leading-relaxed ${
-          accent ? 'text-white/80' : 'text-[#7A6B5D]'
-        } ${feature ? 'max-w-md' : ''}`}
-      >
-        {description}
-      </p>
-    </motion.article>
   )
 }
