@@ -1,5 +1,6 @@
 export const CONFIG = {
-  ERP_URL: 'https://calma-erp.vercel.app/api/webhooks/site-order',
+  ERP_URL: 'https://erp.calma.kg/api/webhooks/site-order',
+  ERP_API: 'https://erp.calma.kg/api/site/products',
   ERP_SECRET: 'calma-site-2026',
   PAYMENTS_URL: 'https://calma-payments-production.up.railway.app',
   WHATSAPP: 'https://wa.me/996500547727',
