@@ -25,6 +25,26 @@ const caveat = Caveat({
 export const metadata: Metadata = {
   title: 'CALMA — Замороженные круассаны для HoReCa в Бишкеке',
   description: 'B2B поставщик замороженных круассанов для кафе, ресторанов и отелей Бишкека. Собственное производство, доставка на следующий день, QR-оплата.',
+  metadataBase: new URL('https://calma.kg'),
+  alternates: {
+    canonical: 'https://calma.kg',
+  },
+  openGraph: {
+    title: 'CALMA — Замороженные круассаны для HoReCa в Бишкеке',
+    description: 'B2B поставщик замороженных круассанов для кафе, ресторанов и отелей Бишкека. Доставка на следующий день.',
+    url: 'https://calma.kg',
+    siteName: 'CALMA',
+    locale: 'ru_KG',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+  verification: {
+    google: 'd47bdb3482eccc6e',
+  },
 }
 
 export function generateStaticParams() {
