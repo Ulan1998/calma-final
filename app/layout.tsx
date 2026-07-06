@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Montserrat, Caveat } from 'next/font/google'
 import ReactDOM from 'react-dom'
 import './globals.css'
 import { SmoothScroll } from '@/components/ui/SmoothScroll'
+import { SchemaOrg } from './schema'
 
 const cormorant = Cormorant_Garamond({
   variable: '--font-display',
@@ -23,15 +24,16 @@ const caveat = Caveat({
 })
 
 export const metadata: Metadata = {
-  title: 'CALMA — Замороженные круассаны для HoReCa в Бишкеке',
-  description: 'B2B поставщик замороженных круассанов для кафе, ресторанов и отелей Бишкека. Собственное производство, доставка на следующий день, QR-оплата.',
+  title: 'CALMA — Круассаны, самсы, выпечка оптом в Бишкеке',
+  description: 'Поставщик замороженной выпечки для кафе и ресторанов Бишкека. Круассаны, самсы, чизкейки, супы — собственное производство. Доставка на следующий день, QR-оплата.',
+  keywords: ['круассаны Бишкек', 'самсы оптом', 'замороженная выпечка', 'чизкейк оптом', 'выпечка для кафе', 'HoReCa Бишкек', 'поставщик выпечки', 'круассаны оптом КР'],
   metadataBase: new URL('https://calma.kg'),
   alternates: {
     canonical: 'https://calma.kg',
   },
   openGraph: {
-    title: 'CALMA — Замороженные круассаны для HoReCa в Бишкеке',
-    description: 'B2B поставщик замороженных круассанов для кафе, ресторанов и отелей Бишкека. Доставка на следующий день.',
+    title: 'CALMA — Круассаны, самсы, выпечка оптом в Бишкеке',
+    description: 'Поставщик замороженной выпечки для кафе и ресторанов Бишкека. Круассаны, самсы, чизкейки — доставка на следующий день.',
     url: 'https://calma.kg',
     siteName: 'CALMA',
     locale: 'ru_KG',
@@ -57,6 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ru" className={`${cormorant.variable} ${montserrat.variable} ${caveat.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col" style={{ background: '#111', color: '#222' }}>
+        <SchemaOrg />
         <SmoothScroll>
           {children}
         </SmoothScroll>
