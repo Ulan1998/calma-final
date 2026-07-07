@@ -55,28 +55,26 @@ export function HowItWorks() {
     <section
       id="how"
       aria-labelledby="how-heading"
-      className="py-8 px-5 bg-[var(--color-bg)] md:py-14"
+      className="py-8 px-5 bg-[var(--color-bg)] md:py-14 md:px-8"
     >
-      <div className="md:max-w-3xl md:mx-auto">
+      <div className="md:max-w-5xl md:mx-auto">
       <motion.p
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.5 }}
-        className="font-script text-center mb-3"
+        className="font-script text-center mb-5"
         style={{ fontSize: '2rem', fontStyle: 'italic', color: '#ab2b02', fontFamily: 'var(--font-script)' }}
       >
         Условия работы
       </motion.p>
-
-
 
       <motion.div
         variants={STAGGER}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-60px' }}
-        className="flex flex-col gap-3"
+        className="flex flex-col gap-3 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-4"
       >
         {TERMS.map((t) => (
           <motion.div

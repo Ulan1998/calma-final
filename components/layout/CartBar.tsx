@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useCart } from '@/lib/cart-context'
 import { CONFIG } from '@/lib/config'
 import { isValidKGPhone } from '@/lib/validate-phone'
@@ -30,6 +30,14 @@ export function CartBar() {
   const [phone, setPhone] = useState('')
   const [formState, setFormState] = useState<FormState>('cart')
   const [error, setError] = useState('')
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 768)
+    check()
+    window.addEventListener('resize', check, { passive: true })
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   const phoneValid = isValidKGPhone(phone)
   const canSubmit = businessName.trim().length > 1 && phoneValid
@@ -101,10 +109,14 @@ export function CartBar() {
       <>
         <div onClick={closeCart} style={{ position: 'fixed', inset: 0, zIndex: 60, background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(3px)' }} />
         <div style={{
-          position: 'fixed', bottom: 0, left: '50%',
-          transform: 'translateX(-50%)',
+          position: 'fixed',
+          bottom: isDesktop ? 'auto' : 0,
+          top: isDesktop ? '50%' : 'auto',
+          left: '50%',
+          transform: isDesktop ? 'translate(-50%, -50%)' : 'translateX(-50%)',
           width: '100%', maxWidth: 430, zIndex: 61,
-          background: '#fff', borderRadius: '24px 24px 0 0',
+          background: '#fff',
+          borderRadius: isDesktop ? '24px' : '24px 24px 0 0',
           boxShadow: '0 -8px 40px rgba(0,0,0,0.18)',
           padding: '28px 24px 48px',
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12,
@@ -136,13 +148,15 @@ export function CartBar() {
     <>
       <div style={{ height: 160 }} aria-hidden="true" />
 
-      {/* CartBar */}
+      {/* CartBar strip */}
       <div
         className="fixed bottom-0 left-1/2 z-50 w-full"
         style={{
           transform: 'translateX(-50%)',
-          maxWidth: 430,
-          padding: '0 12px calc(64px + 8px + env(safe-area-inset-bottom, 0px))',
+          maxWidth: isDesktop ? 680 : 430,
+          padding: isDesktop
+            ? '0 16px 16px'
+            : '0 12px calc(64px + 8px + env(safe-area-inset-bottom, 0px))',
         }}
       >
         <div
@@ -214,13 +228,17 @@ export function CartBar() {
           />
           <div
             style={{
-              position: 'fixed', bottom: 0, left: '50%',
-              transform: 'translateX(-50%)',
-              width: '100%', maxWidth: 430, zIndex: 61,
-              background: '#fff', borderRadius: '24px 24px 0 0',
+              position: 'fixed',
+              bottom: isDesktop ? 'auto' : 0,
+              top: isDesktop ? '50%' : 'auto',
+              left: '50%',
+              transform: isDesktop ? 'translate(-50%, -50%)' : 'translateX(-50%)',
+              width: '100%', maxWidth: 480, zIndex: 61,
+              background: '#fff',
+              borderRadius: isDesktop ? '24px' : '24px 24px 0 0',
               boxShadow: '0 -8px 40px rgba(0,0,0,0.18)',
               overflow: 'hidden',
-              maxHeight: '92svh',
+              maxHeight: isDesktop ? '85vh' : '92svh',
               overflowY: 'auto',
             }}
           >

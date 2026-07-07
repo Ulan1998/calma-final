@@ -48,7 +48,7 @@ export function FAQ() {
     <section
       id="faq"
       aria-labelledby="faq-heading"
-      className="py-8 px-5 bg-[var(--color-bg)] md:py-14"
+      className="py-8 px-5 bg-[var(--color-bg)] md:py-14 md:px-8"
     >
       <div className="md:max-w-3xl md:mx-auto">
       <div className="relative mb-4">

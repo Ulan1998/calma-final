@@ -345,7 +345,7 @@ export function Catalog() {
   }
 
   return (
-    <section id="catalog" className="py-8 px-5 bg-[var(--color-bg)] md:py-14">
+    <section id="catalog" className="py-8 px-5 bg-[var(--color-bg)] md:py-14 md:px-8">
       <div className="md:max-w-5xl md:mx-auto">
 
       <h2

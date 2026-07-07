@@ -18,7 +18,7 @@ export function Hero() {
       <div className="flex flex-col md:flex-row md:min-h-[560px]">
 
         {/* Video */}
-        <div className="w-full md:w-1/2 overflow-hidden md:max-h-none" style={{ maxHeight: 386 }}>
+        <div className="w-full md:w-1/2 overflow-hidden max-h-[386px] md:max-h-none">
           <video
             autoPlay
             muted
@@ -26,8 +26,7 @@ export function Hero() {
             playsInline
             preload="auto"
             poster="/hero-poster.jpg"
-            className="w-full h-full block object-cover object-bottom"
-            style={{ maxHeight: 386 }}
+            className="w-full h-full block object-cover object-bottom max-h-[386px] md:max-h-full"
             aria-label="Производство замороженных круассанов CALMA"
           >
             <source src="/hero.mp4" type="video/mp4" />

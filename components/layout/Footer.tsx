@@ -26,7 +26,7 @@ const PHONE_ICON = (
 
 export function Footer() {
   return (
-    <footer id="footer" className="relative overflow-hidden text-center" style={{ padding: '48px 20px 48px' }}>
+    <footer id="footer" className="relative overflow-hidden" style={{ padding: '56px 20px 48px' }}>
 
       {/* Background photo */}
       <div className="absolute inset-0" aria-hidden="true">
@@ -39,73 +39,80 @@ export function Footer() {
         <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.8)' }} />
       </div>
 
-      {/* Content */}
+      {/* Content — mobile: centered column, desktop: two columns */}
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-60px' }}
         variants={fadeUp}
-        className="relative z-10 flex flex-col items-center gap-5"
+        className="relative z-10 flex flex-col items-center gap-6 text-center md:flex-row md:items-center md:justify-between md:max-w-5xl md:mx-auto md:text-left md:gap-12"
       >
-        <p
-          className="font-script"
-          style={{ fontSize: '1.7rem', fontStyle: 'italic', color: 'rgba(255,255,255,0.7)' }}
-        >
-          Готовы начать?
-        </p>
-
-        <h2
-          className="font-body font-bold text-white"
-          style={{ fontSize: 'clamp(1.55rem, 6.5vw, 2rem)', lineHeight: 1.22, maxWidth: 290, letterSpacing: '-0.02em', textWrap: 'balance' }}
-        >
-          Получите прайс и образцы — бесплатно
-        </h2>
-
-        <a
-          href={CONFIG.WHATSAPP}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full font-body font-bold transition-transform duration-150 active:scale-95"
-          style={{
-            padding: '16px 28px',
-            background: '#25d366',
-            color: '#fff',
-            fontSize: '0.93rem',
-            boxShadow: '0 6px 20px rgba(37,211,102,0.33)',
-          }}
-        >
-          {WA_ICON}
-          Получить прайс-лист
-        </a>
-
-        <div className="flex flex-col gap-3 items-center">
-          <a
-            href="https://instagram.com/calma.kg"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 font-body transition-opacity hover:opacity-60"
-            style={{ fontSize: '0.84rem', color: 'rgba(255,255,255,0.68)' }}
+        {/* Left: heading block */}
+        <div className="flex flex-col items-center md:items-start gap-2">
+          <p
+            className="font-script"
+            style={{ fontSize: '1.7rem', fontStyle: 'italic', color: 'rgba(255,255,255,0.7)' }}
           >
-            {IG_ICON}
-            @calma.kg
-          </a>
-          <a
-            href={`tel:${CONFIG.PHONE}`}
-            className="flex items-center gap-2 font-body transition-opacity hover:opacity-60"
-            style={{ fontSize: '0.84rem', color: 'rgba(255,255,255,0.68)' }}
+            Готовы начать?
+          </p>
+          <h2
+            className="font-body font-bold text-white"
+            style={{ fontSize: 'clamp(1.55rem, 3vw, 2rem)', lineHeight: 1.22, maxWidth: 420, letterSpacing: '-0.02em', textWrap: 'balance' }}
           >
-            {PHONE_ICON}
-            +996 500 547 727
-          </a>
+            Получите прайс и образцы — бесплатно
+          </h2>
         </div>
 
-        <p
-          className="font-body uppercase tracking-[0.22em]"
-          style={{ fontSize: '0.66rem', color: 'rgba(255,255,255,0.28)' }}
-        >
-          CALMA · Замороженные круассаны · Бишкек
-        </p>
+        {/* Right: CTA + contacts */}
+        <div className="flex flex-col items-center md:items-end gap-4 shrink-0">
+          <a
+            href={CONFIG.WHATSAPP}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full font-body font-bold transition-transform duration-150 active:scale-95 hover:scale-105"
+            style={{
+              padding: '16px 28px',
+              background: '#25d366',
+              color: '#fff',
+              fontSize: '0.93rem',
+              boxShadow: '0 6px 20px rgba(37,211,102,0.33)',
+              textDecoration: 'none',
+            }}
+          >
+            {WA_ICON}
+            Получить прайс-лист
+          </a>
+
+          <div className="flex flex-col md:flex-row gap-3 items-center">
+            <a
+              href="https://instagram.com/calma.kg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 font-body transition-opacity hover:opacity-60"
+              style={{ fontSize: '0.84rem', color: 'rgba(255,255,255,0.68)' }}
+            >
+              {IG_ICON}
+              @calma.kg
+            </a>
+            <a
+              href={`tel:${CONFIG.PHONE}`}
+              className="flex items-center gap-2 font-body transition-opacity hover:opacity-60"
+              style={{ fontSize: '0.84rem', color: 'rgba(255,255,255,0.68)' }}
+            >
+              {PHONE_ICON}
+              +996 500 547 727
+            </a>
+          </div>
+        </div>
       </motion.div>
+
+      {/* Copyright */}
+      <p
+        className="relative z-10 font-body uppercase tracking-[0.22em] text-center mt-10"
+        style={{ fontSize: '0.66rem', color: 'rgba(255,255,255,0.28)' }}
+      >
+        CALMA · Замороженные круассаны · Бишкек
+      </p>
     </footer>
   )
 }

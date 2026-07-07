@@ -3,10 +3,11 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useMotionValue, animate } from 'framer-motion'
 import type { PanInfo } from 'framer-motion'
+import { fadeUp, stagger } from '@/lib/motion'
 
 const GAP = 14
 const TOTAL = 6
-const START = TOTAL // middle copy starts at idx 6 in the triple array
+const START = TOTAL
 
 const BENEFITS = [
   {
@@ -69,8 +70,8 @@ const BENEFITS = [
   },
 ]
 
-// Triple the array: [copy1 | copy2(start) | copy3]
 const EXTENDED = [...BENEFITS, ...BENEFITS, ...BENEFITS]
+const DESKTOP_STAGGER = stagger(0.07)
 
 export function Benefits() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -86,8 +87,7 @@ export function Benefits() {
     const measure = () => {
       const w = el.clientWidth
       if (!hasMeasured.current) {
-        const cw0 = w
-        const cardW0 = cw0 * 0.82
+        const cardW0 = w * 0.82
         x.set(-(START * (cardW0 + GAP)))
         hasMeasured.current = true
       }
@@ -113,16 +113,8 @@ export function Benefits() {
   const snapTo = useCallback((targetIdx: number) => {
     clearTeleport()
     const clamped = Math.min(Math.max(targetIdx, 0), EXTENDED.length - 1)
-
-    animate(x, -(clamped * step), {
-      type: 'spring',
-      stiffness: 260,
-      damping: 26,
-      mass: 0.85,
-    })
+    animate(x, -(clamped * step), { type: 'spring', stiffness: 260, damping: 26, mass: 0.85 })
     setIdx(clamped)
-
-    // After spring settles, silently teleport back to the middle copy
     const visualIdx = ((clamped - START) % TOTAL + TOTAL) % TOTAL
     const middleIdx = START + visualIdx
     if (clamped !== middleIdx) {
@@ -134,48 +126,45 @@ export function Benefits() {
     }
   }, [x, step, clearTeleport])
 
-  const onDragStart = useCallback(() => {
-    clearTeleport()
-  }, [clearTeleport])
+  const onDragStart = useCallback(() => { clearTeleport() }, [clearTeleport])
 
   const onDragEnd = useCallback((_e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const { offset, velocity } = info
-    if (velocity.x < -300 || offset.x < -(cardW * 0.28)) {
-      snapTo(idx + 1)
-    } else if (velocity.x > 300 || offset.x > cardW * 0.28) {
-      snapTo(idx - 1)
-    } else {
-      snapTo(idx)
-    }
+    if (velocity.x < -300 || offset.x < -(cardW * 0.28)) snapTo(idx + 1)
+    else if (velocity.x > 300 || offset.x > cardW * 0.28) snapTo(idx - 1)
+    else snapTo(idx)
   }, [idx, cardW, snapTo])
 
-  // Visual index 0–5 for dots and counter
   const activeVisual = ((idx - START) % TOTAL + TOTAL) % TOTAL
 
   return (
-    <section aria-labelledby="benefits-heading" style={{ background: 'var(--color-bg)', paddingTop: 16, paddingBottom: 28 }}>
-
+    <section
+      aria-labelledby="benefits-heading"
+      className="bg-[var(--color-bg)] pt-4 pb-7 md:py-14"
+    >
+      {/* Heading */}
       <motion.h2
         id="benefits-heading"
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.55 }}
-        className="font-script text-center"
+        className="font-script text-center mb-0"
         style={{ fontSize: '2rem', fontStyle: 'italic', color: '#ab2b02', margin: 0, padding: '0 20px', fontFamily: 'var(--font-script)' }}
       >
         Почему выбирают нас
       </motion.h2>
 
-      <div style={{ marginTop: 16, marginBottom: 24, overflow: 'hidden' }}>
+      {/* Decorative video — mobile only */}
+      <div className="md:hidden" style={{ marginTop: 16, marginBottom: 24, overflow: 'hidden' }}>
         <video autoPlay muted playsInline loop preload="auto"
           style={{ width: '480%', height: 'auto', display: 'block' }}>
           <source src="/animations/test50.mp4" type="video/mp4" />
         </video>
       </div>
 
-      {/* Drag carousel */}
-      <div ref={containerRef} style={{ overflow: 'hidden' }}>
+      {/* ─── MOBILE: Drag carousel ─── */}
+      <div className="md:hidden" ref={containerRef} style={{ overflow: 'hidden' }}>
         <motion.div
           drag="x"
           style={{ x, display: 'flex', gap: GAP, paddingLeft: sidepad, paddingRight: sidepad }}
@@ -190,7 +179,6 @@ export function Benefits() {
             const dist = Math.abs(i - idx)
             const isActive = dist === 0
             const isAdjacent = dist === 1
-
             return (
               <motion.div
                 key={`${i}`}
@@ -201,62 +189,42 @@ export function Benefits() {
                 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                 style={{
-                  width: cardW,
-                  flexShrink: 0,
-                  background: '#fff',
-                  borderRadius: 22,
-                  padding: '0 20px 24px',
+                  width: cardW, flexShrink: 0, background: '#fff',
+                  borderRadius: 22, padding: '0 20px 24px',
                   border: `1px solid ${isActive ? 'rgba(171,43,2,0.22)' : 'var(--color-border)'}`,
                   boxShadow: isActive
                     ? '0 12px 40px rgba(171,43,2,0.13), 0 2px 8px rgba(0,0,0,0.05)'
                     : '0 2px 8px rgba(0,0,0,0.04)',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  cursor: 'grab',
+                  position: 'relative', overflow: 'hidden', cursor: 'grab',
                 }}
               >
-                {/* Top accent bar fades in on active */}
                 <motion.div
                   animate={{ opacity: isActive ? 1 : 0, scaleX: isActive ? 1 : 0.4 }}
                   transition={{ duration: 0.28 }}
                   style={{
                     position: 'absolute', top: 0, left: 0, right: 0, height: 3,
                     background: 'linear-gradient(90deg, #ab2b02 0%, rgba(171,43,2,0.3) 100%)',
-                    borderRadius: '22px 22px 0 0',
-                    transformOrigin: 'left',
+                    borderRadius: '22px 22px 0 0', transformOrigin: 'left',
                   }}
                 />
-
-                {/* Ghost number */}
                 <span aria-hidden="true" style={{
                   position: 'absolute', top: 10, right: 14,
                   fontSize: '5.5rem', fontWeight: 800, lineHeight: 1,
-                  color: 'rgba(171,43,2,0.07)',
-                  fontFamily: 'var(--font-body)',
-                  pointerEvents: 'none', userSelect: 'none',
-                  letterSpacing: '-0.04em',
+                  color: 'rgba(171,43,2,0.07)', fontFamily: 'var(--font-body)',
+                  pointerEvents: 'none', userSelect: 'none', letterSpacing: '-0.04em',
                 }}>
                   {String((i % TOTAL) + 1).padStart(2, '0')}
                 </span>
-
-                {/* Icon */}
                 <div style={{ paddingTop: 22, marginBottom: 14 }}>
                   <div style={{ width: 40, height: 40, color: '#ab2b02' }}>{b.icon}</div>
                 </div>
-
-                {/* Title */}
                 <p className="font-body" style={{
                   fontSize: '1.08rem', fontWeight: 700, lineHeight: 1.28,
                   color: 'var(--color-text)', margin: '0 0 10px', letterSpacing: '-0.01em',
                 }}>
                   {b.title}
                 </p>
-
-                {/* Body */}
-                <p className="font-body" style={{
-                  fontSize: '0.875rem', lineHeight: 1.7,
-                  color: 'var(--color-muted)', margin: 0,
-                }}>
+                <p className="font-body" style={{ fontSize: '0.875rem', lineHeight: 1.7, color: 'var(--color-muted)', margin: 0 }}>
                   {b.text}
                 </p>
               </motion.div>
@@ -265,15 +233,11 @@ export function Benefits() {
         </motion.div>
       </div>
 
-      {/* Counter + animated dots */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginTop: 18 }}>
-        <span className="font-body" style={{
-          fontSize: '0.7rem', fontWeight: 600, color: 'rgba(171,43,2,0.5)',
-          letterSpacing: '0.06em', minWidth: 32, textAlign: 'right',
-        }}>
+      {/* Mobile dots counter */}
+      <div className="md:hidden" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginTop: 18 }}>
+        <span className="font-body" style={{ fontSize: '0.7rem', fontWeight: 600, color: 'rgba(171,43,2,0.5)', letterSpacing: '0.06em', minWidth: 32, textAlign: 'right' }}>
           {String(activeVisual + 1).padStart(2, '0')}
         </span>
-
         <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
           {BENEFITS.map((_, i) => (
             <motion.button
@@ -289,13 +253,60 @@ export function Benefits() {
             />
           ))}
         </div>
-
-        <span className="font-body" style={{
-          fontSize: '0.7rem', fontWeight: 600, color: 'rgba(171,43,2,0.3)',
-          letterSpacing: '0.06em', minWidth: 32,
-        }}>
+        <span className="font-body" style={{ fontSize: '0.7rem', fontWeight: 600, color: 'rgba(171,43,2,0.3)', letterSpacing: '0.06em', minWidth: 32 }}>
           {String(TOTAL).padStart(2, '0')}
         </span>
+      </div>
+
+      {/* ─── DESKTOP: Grid ─── */}
+      <div className="hidden md:block px-8 mt-8">
+        <div className="max-w-5xl mx-auto">
+          <motion.div
+            variants={DESKTOP_STAGGER}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-60px' }}
+            className="grid grid-cols-3 gap-5"
+          >
+            {BENEFITS.map((b, i) => (
+              <motion.div
+                key={b.title}
+                variants={fadeUp}
+                className="bg-white rounded-[22px] p-6 border border-[var(--color-border)] relative overflow-hidden flex flex-col"
+                style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}
+              >
+                {/* Top accent bar */}
+                <div style={{
+                  position: 'absolute', top: 0, left: 0, right: 0, height: 3,
+                  background: 'linear-gradient(90deg, #ab2b02 0%, rgba(171,43,2,0.3) 100%)',
+                  borderRadius: '22px 22px 0 0',
+                }} />
+
+                {/* Ghost number */}
+                <span aria-hidden="true" style={{
+                  position: 'absolute', top: 10, right: 14,
+                  fontSize: '5.5rem', fontWeight: 800, lineHeight: 1,
+                  color: 'rgba(171,43,2,0.06)', fontFamily: 'var(--font-body)',
+                  pointerEvents: 'none', userSelect: 'none', letterSpacing: '-0.04em',
+                }}>
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+
+                {/* Icon */}
+                <div style={{ paddingTop: 20, marginBottom: 14 }}>
+                  <div style={{ width: 40, height: 40, color: '#ab2b02' }}>{b.icon}</div>
+                </div>
+
+                <p className="font-body font-bold text-[var(--color-text)] mb-2" style={{ fontSize: '1.05rem', lineHeight: 1.28, letterSpacing: '-0.01em' }}>
+                  {b.title}
+                </p>
+                <p className="font-body text-[var(--color-muted)] mt-auto" style={{ fontSize: '0.875rem', lineHeight: 1.7 }}>
+                  {b.text}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   )
