@@ -71,9 +71,17 @@
 }
 
 body {
-  background: #f3f3f4;
+  background: #F0EBE3;
   color: var(--color-text);
   font-family: var(--font-body), system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+/* Prevent iOS Safari input zoom — keep font-size ≥ 16px on inputs */
+input, textarea, select {
+  font-size: max(16px, 1rem);
 }
 
 h1, h2, h3 {

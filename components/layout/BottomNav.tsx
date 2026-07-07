@@ -208,7 +208,6 @@ export function BottomNav() {
       {/* Nav bar */}
       <nav
         aria-label="Навигация"
-        className="md:hidden"
         style={{
           position: 'fixed',
           bottom: 0,
@@ -217,6 +216,7 @@ export function BottomNav() {
           width: '100%',
           maxWidth: 430,
           height: 64,
+          paddingBottom: 'env(safe-area-inset-bottom)',
           display: 'grid',
           gridTemplateColumns: 'repeat(4, 1fr)',
           background: 'rgba(255,255,255,0.94)',

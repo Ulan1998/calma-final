@@ -59,7 +59,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   ReactDOM.preload('/hero.mp4', { as: 'video', fetchPriority: 'high' })
   return (
     <html lang="ru" className={`${cormorant.variable} ${montserrat.variable} ${caveat.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col" style={{ background: '#111', color: '#222' }}>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+      </head>
+      <body className="min-h-full flex flex-col" style={{ background: '#F0EBE3', color: '#222' }}>
         <SchemaOrg />
         <SmoothScroll>
           {children}
