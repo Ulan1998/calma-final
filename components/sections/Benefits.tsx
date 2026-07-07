@@ -234,7 +234,7 @@ export function Benefits() {
       </div>
 
       {/* Mobile dots counter */}
-      <div className="md:hidden" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginTop: 18 }}>
+      <div className="flex items-center justify-center md:hidden" style={{ gap: 12, marginTop: 18 }}>
         <span className="font-body" style={{ fontSize: '0.7rem', fontWeight: 600, color: 'rgba(171,43,2,0.5)', letterSpacing: '0.06em', minWidth: 32, textAlign: 'right' }}>
           {String(activeVisual + 1).padStart(2, '0')}
         </span>
