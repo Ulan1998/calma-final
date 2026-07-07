@@ -15,8 +15,8 @@ export function Clients() {
       style={{ background: 'var(--color-bg)' }}
     >
       <h2
-        className="font-body font-bold text-center mb-5 px-5"
-        style={{ color: '#2B211D', fontSize: 'clamp(1.45rem, 5.5vw, 1.85rem)', lineHeight: 1.22, letterSpacing: '-0.025em' }}
+        className="font-script text-center mb-5 px-5"
+        style={{ fontSize: '2rem', fontStyle: 'italic', color: '#ab2b02', fontFamily: 'var(--font-script)' }}
       >
         Нам доверяют
       </h2>
