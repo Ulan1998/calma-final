@@ -349,7 +349,7 @@ export function Catalog() {
 
       <h2
         className="font-script text-center mb-5"
-        style={{ fontSize: '2rem', fontStyle: 'italic', color: '#ab2b02' }}
+        style={{ fontSize: '2rem', fontStyle: 'italic', color: '#ab2b02', fontFamily: 'var(--font-script)' }}
       >
         Каталог
       </h2>

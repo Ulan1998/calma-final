@@ -162,7 +162,7 @@ export function Benefits() {
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.55 }}
         className="font-script text-center"
-        style={{ fontSize: '2rem', fontStyle: 'italic', color: '#ab2b02', margin: 0, padding: '0 20px' }}
+        style={{ fontSize: '2rem', fontStyle: 'italic', color: '#ab2b02', margin: 0, padding: '0 20px', fontFamily: 'var(--font-script)' }}
       >
         Почему выбирают нас
       </motion.h2>

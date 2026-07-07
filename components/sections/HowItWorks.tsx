@@ -63,7 +63,7 @@ export function HowItWorks() {
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.5 }}
         className="font-script text-center mb-3"
-        style={{ fontSize: '2rem', fontStyle: 'italic', color: '#ab2b02' }}
+        style={{ fontSize: '2rem', fontStyle: 'italic', color: '#ab2b02', fontFamily: 'var(--font-script)' }}
       >
         Условия работы
       </motion.p>
