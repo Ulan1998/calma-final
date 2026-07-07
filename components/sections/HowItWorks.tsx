@@ -55,8 +55,9 @@ export function HowItWorks() {
     <section
       id="how"
       aria-labelledby="how-heading"
-      className="py-8 px-5 bg-[var(--color-bg)]"
+      className="py-8 px-5 bg-[var(--color-bg)] md:py-14"
     >
+      <div className="md:max-w-3xl md:mx-auto">
       <motion.p
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -101,6 +102,7 @@ export function HowItWorks() {
           </motion.div>
         ))}
       </motion.div>
+      </div>
     </section>
   )
 }

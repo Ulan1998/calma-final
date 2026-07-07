@@ -12,105 +12,112 @@ const STATS = [
 
 export function Hero() {
   return (
-    <section aria-labelledby="hero-heading" className="flex flex-col bg-[var(--color-bg)]">
+    <section aria-labelledby="hero-heading" className="bg-[var(--color-bg)] md:pt-16">
 
-      {/* Video */}
-      <div className="w-full overflow-hidden" style={{ maxHeight: 386 }}>
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          poster="/hero-poster.jpg"
-          className="w-full block object-cover object-bottom"
-          style={{ maxHeight: 386 }}
-          aria-label="Производство замороженных круассанов CALMA"
-        >
-          <source src="/hero.mp4" type="video/mp4" />
-        </video>
-      </div>
+      {/* Mobile: stacked. Desktop: side-by-side */}
+      <div className="flex flex-col md:flex-row md:min-h-[560px]">
 
-      {/* Content */}
-      <div className="flex flex-col items-center gap-0 px-6 pt-1 pb-3 text-center">
+        {/* Video */}
+        <div className="w-full md:w-1/2 overflow-hidden md:max-h-none" style={{ maxHeight: 386 }}>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            poster="/hero-poster.jpg"
+            className="w-full h-full block object-cover object-bottom"
+            style={{ maxHeight: 386 }}
+            aria-label="Производство замороженных круассанов CALMA"
+          >
+            <source src="/hero.mp4" type="video/mp4" />
+          </video>
+        </div>
 
-        {/* H1 */}
-        <motion.h1
-          id="hero-heading"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: EASE, delay: 0.18 }}
-          className="font-body font-bold text-[var(--color-text)] mb-2"
-          style={{ fontSize: 'clamp(1.5rem, 6.5vw, 2rem)', lineHeight: 1.18, letterSpacing: '-0.025em', textWrap: 'balance' }}
-        >
-          Замороженные круассаны для{' '}
-          <span style={{ color: '#ab2b02' }}>HoReCa</span>
-        </motion.h1>
+        {/* Content */}
+        <div className="flex flex-col items-center md:items-start md:justify-center gap-0 px-6 pt-1 pb-3 md:pt-12 md:pb-12 md:px-12 text-center md:text-left md:w-1/2">
 
-        {/* Stats card */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, ease: EASE, delay: 0.44 }}
-          className="flex w-full rounded-2xl overflow-hidden mb-3 bg-white border border-[var(--color-border)]"
-        >
-          {STATS.map((s, i) => (
-            <div
-              key={s.value}
-              className="flex-1 flex flex-col items-center py-3 px-2 text-center"
-              style={{ borderRight: i < STATS.length - 1 ? '1px solid var(--color-border)' : 'none' }}
-            >
-              <span
-                className="font-body font-extrabold text-[var(--color-text)] mb-1"
-                style={{ fontSize: '1.15rem', lineHeight: 1, letterSpacing: '-0.02em' }}
+          {/* H1 */}
+          <motion.h1
+            id="hero-heading"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: EASE, delay: 0.18 }}
+            className="font-body font-bold text-[var(--color-text)] mb-2 md:mb-4"
+            style={{ fontSize: 'clamp(1.5rem, 3vw, 2.6rem)', lineHeight: 1.18, letterSpacing: '-0.025em', textWrap: 'balance' }}
+          >
+            Замороженные круассаны для{' '}
+            <span style={{ color: '#ab2b02' }}>HoReCa</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, ease: EASE, delay: 0.3 }}
+            className="hidden md:block font-body text-[var(--color-muted)] mb-6"
+            style={{ fontSize: '1rem', lineHeight: 1.6 }}
+          >
+            Поставщик замороженной выпечки для кафе и ресторанов Бишкека. Собственное производство, доставка на следующий день.
+          </motion.p>
+
+          {/* Stats card */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, ease: EASE, delay: 0.44 }}
+            className="flex w-full rounded-2xl overflow-hidden mb-3 md:mb-6 bg-white border border-[var(--color-border)]"
+          >
+            {STATS.map((s, i) => (
+              <div
+                key={s.value}
+                className="flex-1 flex flex-col items-center py-3 px-2 text-center"
+                style={{ borderRight: i < STATS.length - 1 ? '1px solid var(--color-border)' : 'none' }}
               >
-                {s.value}
-              </span>
-              <span className="font-body text-[var(--color-muted)] font-medium" style={{ fontSize: '0.65rem', lineHeight: 1.35 }}>
-                {s.label}
-              </span>
-            </div>
-          ))}
-        </motion.div>
+                <span
+                  className="font-body font-extrabold text-[var(--color-text)] mb-1"
+                  style={{ fontSize: '1.15rem', lineHeight: 1, letterSpacing: '-0.02em' }}
+                >
+                  {s.value}
+                </span>
+                <span className="font-body text-[var(--color-muted)] font-medium" style={{ fontSize: '0.65rem', lineHeight: 1.35 }}>
+                  {s.label}
+                </span>
+              </div>
+            ))}
+          </motion.div>
 
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, ease: EASE, delay: 0.56 }}
-          className="flex flex-col gap-3 w-full"
-        >
-          <button
-            onClick={() => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-            className="block w-full text-center rounded-full py-4 text-sm font-semibold text-white font-body transition-transform duration-150 active:scale-95"
-            style={{
-              background: '#ab2b02',
-              boxShadow: '0 6px 20px rgba(171,43,2,0.38)',
-              border: 'none',
-              cursor: 'pointer',
-            }}
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, ease: EASE, delay: 0.56 }}
+            className="flex flex-col md:flex-row gap-3 w-full"
           >
-            Выбрать продукцию
-          </button>
-          <a
-            href={CONFIG.WHATSAPP}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium text-center font-body hover:opacity-70 transition-opacity underline underline-offset-6"
-            style={{ color: 'var(--color-muted)' }}
-          >
-            Написать в WhatsApp
-          </a>
-        </motion.div>
+            <button
+              onClick={() => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+              className="block w-full md:w-auto md:px-8 text-center rounded-full py-4 text-sm font-semibold text-white font-body transition-transform duration-150 active:scale-95"
+              style={{
+                background: '#ab2b02',
+                boxShadow: '0 6px 20px rgba(171,43,2,0.38)',
+                border: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              Выбрать продукцию
+            </button>
+            <a
+              href={CONFIG.WHATSAPP}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-center font-body hover:opacity-70 transition-opacity underline underline-offset-6 py-4 md:py-0 md:flex md:items-center"
+              style={{ color: 'var(--color-muted)' }}
+            >
+              Написать в WhatsApp
+            </a>
+          </motion.div>
 
+        </div>
       </div>
-
-      <style>{`
-        @keyframes heroPulse {
-          0%,100% { opacity: 1; transform: scale(1); }
-          50% { opacity: .5; transform: scale(.7); }
-        }
-      `}</style>
     </section>
   )
 }

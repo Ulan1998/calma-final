@@ -208,6 +208,7 @@ export function BottomNav() {
       {/* Nav bar */}
       <nav
         aria-label="Навигация"
+        className="md:hidden"
         style={{
           position: 'fixed',
           bottom: 0,

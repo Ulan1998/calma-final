@@ -11,7 +11,7 @@ export function Clients() {
   return (
     <section
       aria-label="Нашу продукцию выбирают заведения HoReCa Бишкека"
-      className="py-8 px-0"
+      className="py-8 px-0 md:py-14"
       style={{ background: 'var(--color-bg)' }}
     >
       <h2

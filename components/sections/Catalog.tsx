@@ -210,7 +210,7 @@ function SubGroup({ group, qtys, onPlus, onMinus }: {
                     {sub.label}
                   </p>
                 )}
-                <div className="grid grid-cols-2 gap-3 mb-1">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-1">
                   {items.map(p => (
                     <PCard
                       key={p.id}
@@ -294,7 +294,7 @@ function AccItem({ cat, qtys, onPlus, onMinus }: {
                     {sub.label}
                   </p>
                 )}
-                <div className="grid grid-cols-2 gap-3 mb-1">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-1">
                   {items.map(p => (
                     <PCard
                       key={p.id}
@@ -345,7 +345,8 @@ export function Catalog() {
   }
 
   return (
-    <section id="catalog" className="py-8 px-5 bg-[var(--color-bg)]">
+    <section id="catalog" className="py-8 px-5 bg-[var(--color-bg)] md:py-14">
+      <div className="md:max-w-5xl md:mx-auto">
 
       <h2
         className="font-script text-center mb-5"
@@ -371,6 +372,7 @@ export function Catalog() {
             onMinus={handleMinus}
           />
         ))}
+      </div>
       </div>
     </section>
   )

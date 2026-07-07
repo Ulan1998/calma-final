@@ -48,8 +48,9 @@ export function FAQ() {
     <section
       id="faq"
       aria-labelledby="faq-heading"
-      className="py-8 px-5 bg-[var(--color-bg)]"
+      className="py-8 px-5 bg-[var(--color-bg)] md:py-14"
     >
+      <div className="md:max-w-3xl md:mx-auto">
       <div className="relative mb-4">
         <motion.p
           initial={{ opacity: 0 }}
@@ -162,6 +163,7 @@ export function FAQ() {
       </motion.div>
 
       <InstructionModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+      </div>
     </section>
   )
 }

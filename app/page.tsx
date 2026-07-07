@@ -1,6 +1,7 @@
 import { CartProvider } from '@/lib/cart-context'
 import { CartBar } from '@/components/layout/CartBar'
 import { BottomNav } from '@/components/layout/BottomNav'
+import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { Hero } from '@/components/sections/Hero'
 import { Benefits } from '@/components/sections/Benefits'
@@ -12,19 +13,17 @@ import { Clients } from '@/components/sections/Clients'
 export default function Home() {
   return (
     <CartProvider>
+      <Navbar />
       <div
         id="app"
+        className="w-full max-w-[430px] md:max-w-none mx-auto relative"
         style={{
-          width: '100%',
-          maxWidth: 430,
-          margin: '0 auto',
           background: '#ffffff',
           minHeight: '100svh',
           borderTop: '3px solid #ab2b02',
-          position: 'relative',
         }}
       >
-        <main style={{ paddingBottom: 88 }}>
+        <main className="pb-[88px] md:pb-0">
           <Hero />
           <Benefits />
           <Catalog />
