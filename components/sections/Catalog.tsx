@@ -29,13 +29,6 @@ const PRODUCTS: P[] = [
   {id:'vanilla',       cat:'filled', name:'Ваниль',          sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, img:'/croissant-vanilla.png'},
   {id:'curd',          cat:'filled', name:'Творог',          sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, img:'/croissant-vanilla.png'},
   {id:'curd-orange',   cat:'filled', name:'Творог-апельсин', sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, img:'/croissant-berry.png'},
-  // Мороженое
-  {id:'ice-pistachio',  cat:'icecream', name:'Фисташка',         sub:'за кг', price:950, priceTypyn:95000, unit:'кг', minQty:1, img:B[0]},
-  {id:'ice-talkan',     cat:'icecream', name:'Талкан',           sub:'за кг', price:950, priceTypyn:95000, unit:'кг', minQty:1, img:B[1]},
-  {id:'ice-strawberry', cat:'icecream', name:'Клубника',         sub:'за кг', price:950, priceTypyn:95000, unit:'кг', minQty:1, img:B[2]},
-  {id:'ice-chocolate',  cat:'icecream', name:'Шоколадное',       sub:'за кг', price:950, priceTypyn:95000, unit:'кг', minQty:1, img:B[3]},
-  {id:'ice-cream',      cat:'icecream', name:'Сливочное',        sub:'за кг', price:950, priceTypyn:95000, unit:'кг', minQty:1, img:B[4]},
-  {id:'ice-caramel',    cat:'icecream', name:'Солёная карамель', sub:'за кг', price:950, priceTypyn:95000, unit:'кг', minQty:1, img:B[0]},
   // Супы
   {id:'soup-borsch',   cat:'soups', name:'Борщ',           sub:'500 г', price:290, priceTypyn:29000, unit:'шт', minQty:1, img:B[1]},
   {id:'soup-solyanka', cat:'soups', name:'Солянка',        sub:'500 г', price:290, priceTypyn:29000, unit:'шт', minQty:1, img:B[2]},
@@ -45,18 +38,8 @@ const PRODUCTS: P[] = [
   {id:'soup-anti',     cat:'soups', name:'Антипохмельный', sub:'500 г', price:260, priceTypyn:26000, unit:'шт', minQty:1, img:B[1]},
   {id:'soup-tomyam',   cat:'soups', name:'Том ям',         sub:'500 г', price:370, priceTypyn:37000, unit:'шт', minQty:1, img:B[2]},
   // Тесто
-  {id:'dough-viennese', cat:'dough', name:'Венская выпечка', sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, img:B[3]},
-  {id:'dough-napoleon', cat:'dough', name:'Наполеон',        sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, img:B[4]},
-  // Тесто для самсы (по кг)
-  {id:'samsa-dough', cat:'samsa-dough', name:'Тесто для самсы', sub:'за кг', price:250, priceTypyn:25000, unit:'кг', minQty:3, img:B[2]},
-  // Самсы мини
-  {id:'samsa-mini-meat',    cat:'samsa-mini', name:'Мясо',       sub:'35 с/шт', price:35, priceTypyn:3500, unit:'шт', minQty:1, img:B[0]},
-  {id:'samsa-mini-chicken', cat:'samsa-mini', name:'Курица',     sub:'35 с/шт', price:35, priceTypyn:3500, unit:'шт', minQty:1, img:B[1]},
-  {id:'samsa-mini-cs',      cat:'samsa-mini', name:'Курица-сыр', sub:'35 с/шт', price:35, priceTypyn:3500, unit:'шт', minQty:1, img:B[2]},
-  // Самсы слоёные
-  {id:'samsa-puff-meat',    cat:'samsa-puff', name:'Мясо',       sub:'55 с/шт', price:55, priceTypyn:5500, unit:'шт', minQty:1, img:B[3]},
-  {id:'samsa-puff-chicken', cat:'samsa-puff', name:'Курица',     sub:'55 с/шт', price:55, priceTypyn:5500, unit:'шт', minQty:1, img:B[4]},
-  {id:'samsa-puff-cs',      cat:'samsa-puff', name:'Курица-сыр', sub:'55 с/шт', price:55, priceTypyn:5500, unit:'шт', minQty:1, img:B[0]},
+  {id:'dough-croissant', cat:'dough', name:'Тесто для круассанов',   sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, img:B[3]},
+  {id:'dough-samsa',     cat:'dough', name:'Тесто для самс слоеное', sub:'1 кг', price:250, priceTypyn:25000, unit:'кг', minQty:1, img:B[2]},
   // Киш
   {id:'quiche-chicken', cat:'quiche', name:'Курица-грибы', sub:'', price:600, priceTypyn:60000, unit:'шт', minQty:1, img:B[1]},
   {id:'quiche-salmon',  cat:'quiche', name:'Лосось-грибы', sub:'', price:600, priceTypyn:60000, unit:'шт', minQty:1, img:B[2]},
@@ -76,10 +59,7 @@ type CatDef = { id: string; label: string; icon: string; subs: SubDef[]; groups?
 const CATS: CatDef[] = [
   { id:'croissants', label:'Замороженные круассаны', icon:'🥐',
     subs:[{id:'plain',label:'Без начинки'},{id:'filled',label:'С начинкой'}] },
-  { id:'icecream',   label:'Мороженое',              icon:'🍦', subs:[{id:'icecream',label:null}] },
-  { id:'samsa',      label:'Тесто для самсы',      icon:'🥟',
-    subs:[{id:'samsa-dough',label:'Тесто (по кг)'},{id:'samsa-mini',label:'Мини · Сметанное'},{id:'samsa-puff',label:'Слоёные'}] },
-  { id:'dough',      label:'Другое тесто',            icon:'🫓', subs:[{id:'dough',label:null}] },
+  { id:'dough',      label:'Тесто',                   icon:'🫓', subs:[{id:'dough',label:null}] },
   { id:'dessert',    label:'Десерты',                 icon:'🍰', subs:[{id:'dessert',label:null}] },
 ]
 
