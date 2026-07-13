@@ -1,7 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const ERP_URL    = process.env.ERP_URL    ?? 'https://calma-erp.vercel.app/api/webhooks/site-order'
-const ERP_SECRET = process.env.ERP_SECRET ?? 'calma-site-2026'
+function getErpUrl(): string {
+  if (!process.env.ERP_URL) {
+    throw new Error('ERP_URL is required')
+  }
+  return process.env.ERP_URL
+}
+
+function getErpSecret(): string {
+  if (!process.env.ERP_SECRET) {
+    throw new Error('ERP_SECRET is required')
+  }
+  return process.env.ERP_SECRET
+}
 
 const SKU_MAP: Record<string, string> = {
   'plain-micro':        'PLAIN-MICRO',
@@ -52,11 +63,11 @@ export async function POST(req: NextRequest) {
       })),
     }
 
-    const res = await fetch(ERP_URL, {
+    const res = await fetch(getErpUrl(), {
       method: 'POST',
       headers: {
         'Content-Type':   'application/json',
-        'x-calma-secret': ERP_SECRET,
+        'x-calma-secret': getErpSecret(),
       },
       body: JSON.stringify(erpBody),
     })

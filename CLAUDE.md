@@ -117,9 +117,9 @@ public/mascots/
 
 | Сервис | URL / Header |
 |--------|-------------|
-| ERP (заказы) | `POST https://calma-erp.vercel.app/api/webhooks/site-order` + `x-calma-secret: calma-site-2026` |
-| xPay QR | `POST https://calma-payments-production.up.railway.app/qr/create` |
-| xPay polling | `GET /status/:qr_transaction_id` каждые 4s |
+| ERP (заказы) | `POST https://erp.calma.kg/api/webhooks/site-order` + `x-calma-secret: calma-site-2026` (через `/api/order` на сайте, `ERP_URL`/`ERP_SECRET` в Vercel env) |
+| xPay QR | `POST https://erp.calma.kg/api/payments/qr/create` (`PAYMENTS_URL` в `lib/config.ts`) |
+| xPay polling | `GET https://erp.calma.kg/api/payments/status/:qr_transaction_id` каждые 4s |
 | WhatsApp | `https://wa.me/996500547727` |
 
 xPay deeplink → **`window.open()`**, не `window.location.href`.
