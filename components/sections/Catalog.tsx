@@ -40,6 +40,8 @@ const PRODUCTS: P[] = [
   // Тесто
   {id:'dough-croissant', cat:'dough', name:'Тесто для круассанов',   sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, img:B[3]},
   {id:'dough-samsa',     cat:'dough', name:'Тесто для самс слоеное', sub:'1 кг', price:250, priceTypyn:25000, unit:'кг', minQty:1, img:B[2]},
+  {id:'dough-viennese',  cat:'dough', name:'Венская выпечка',        sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, img:B[3]},
+  {id:'dough-napoleon',  cat:'dough', name:'Наполеон',                sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, img:B[4]},
   // Киш
   {id:'quiche-chicken', cat:'quiche', name:'Курица-грибы', sub:'', price:600, priceTypyn:60000, unit:'шт', minQty:1, img:B[1]},
   {id:'quiche-salmon',  cat:'quiche', name:'Лосось-грибы', sub:'', price:600, priceTypyn:60000, unit:'шт', minQty:1, img:B[2]},

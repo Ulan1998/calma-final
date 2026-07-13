@@ -25,6 +25,8 @@ const SKU_MAP: Record<string, string> = {
   'soup-tomyam':        'SOUP-TOMYAM',
   'dough-croissant':    'DOUGH-CROIS',
   'dough-samsa':        'DOUGH-SAMSA',
+  'dough-viennese':     'DOUGH-VIEN',
+  'dough-napoleon':     'DOUGH-NAP',
   'quiche-chicken':          'QUICHE-CHICK',
   'quiche-salmon':           'QUICHE-SAL',
   'dessert-cheesecake-sb':   'CAKE-SB',
