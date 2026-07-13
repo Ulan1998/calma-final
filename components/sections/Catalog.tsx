@@ -46,10 +46,13 @@ const PRODUCTS: P[] = [
   {id:'quiche-chicken', cat:'quiche', name:'Курица-грибы', sub:'', price:600, priceTypyn:60000, unit:'шт', minQty:1, img:B[1]},
   {id:'quiche-salmon',  cat:'quiche', name:'Лосось-грибы', sub:'', price:600, priceTypyn:60000, unit:'шт', minQty:1, img:B[2]},
   // Десерты
-  {id:'dessert-cheesecake-sb',   cat:'dessert', name:'Чизкейк Сан Себастьян', sub:'', price:0, priceTypyn:0, unit:'шт', minQty:1, img:B[0]},
-  {id:'dessert-cheesecake-oreo', cat:'dessert', name:'Чизкейк Орео',          sub:'', price:0, priceTypyn:0, unit:'шт', minQty:1, img:B[1]},
-  {id:'dessert-cheesecake-ny',   cat:'dessert', name:'Чизкейк Нью-Йорк',     sub:'', price:0, priceTypyn:0, unit:'шт', minQty:1, img:B[2]},
-  {id:'dessert-choco-cake',      cat:'dessert', name:'Шоколадный торт',       sub:'', price:0, priceTypyn:0, unit:'шт', minQty:1, img:B[3]},
+  {id:'dessert-cheesecake-sb',   cat:'dessert', name:'Чизкейк Сан Себастьян', sub:'1 порция · 170–185 г', price:210, priceTypyn:21000, unit:'шт', minQty:1, img:B[0]},
+  {id:'dessert-cheesecake-oreo', cat:'dessert', name:'Чизкейк Орео',          sub:'1 порция · 170–185 г', price:210, priceTypyn:21000, unit:'шт', minQty:1, img:B[1]},
+  {id:'dessert-cheesecake-ny',   cat:'dessert', name:'Чизкейк Нью-Йорк',     sub:'1 порция · 170–185 г', price:200, priceTypyn:20000, unit:'шт', minQty:1, img:B[2]},
+  {id:'dessert-choco-cake',      cat:'dessert', name:'Шоколадный торт',       sub:'1 порция · 170–185 г', price:220, priceTypyn:22000, unit:'шт', minQty:1, img:B[3]},
+  // Булочки
+  {id:'bun-white', cat:'buns', name:'Бургерная булочка белая', sub:'140 г', price:30, priceTypyn:3000, unit:'шт', minQty:1, img:B[4]},
+  {id:'bun-black', cat:'buns', name:'Черная булочка бургерная', sub:'140 г', price:32, priceTypyn:3200, unit:'шт', minQty:1, img:B[0]},
 ]
 
 const PMAP = Object.fromEntries(PRODUCTS.map(p => [p.id, p]))
@@ -63,6 +66,7 @@ const CATS: CatDef[] = [
     subs:[{id:'plain',label:'Без начинки'},{id:'filled',label:'С начинкой'}] },
   { id:'dough',      label:'Тесто',                   icon:'🫓', subs:[{id:'dough',label:null}] },
   { id:'dessert',    label:'Десерты',                 icon:'🍰', subs:[{id:'dessert',label:null}] },
+  { id:'buns',       label:'Булочки',                 icon:'🥯', subs:[{id:'buns',label:null}] },
 ]
 
 const fmt = (n: number) => n.toLocaleString('ru-RU')

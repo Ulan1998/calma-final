@@ -46,6 +46,12 @@ export const PRODUCT_SKU: Record<string, string> = {
   'dough-napoleon':     'DOUGH-NAP',
   'quiche-chicken':     'QUICHE-CHICK',
   'quiche-salmon':      'QUICHE-SAL',
+  'dessert-cheesecake-sb':   'CAKE-SB',
+  'dessert-cheesecake-oreo': 'CAKE-OREO',
+  'dessert-cheesecake-ny':   'CAKE-NY',
+  'dessert-choco-cake':      'CAKE-CHOC',
+  'bun-white':               'BUN-WHITE',
+  'bun-black':               'BUN-BLACK',
 }
 
 export const PRODUCTS: Product[] = [

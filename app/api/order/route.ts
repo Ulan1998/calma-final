@@ -33,6 +33,8 @@ const SKU_MAP: Record<string, string> = {
   'dessert-cheesecake-oreo': 'CAKE-OREO',
   'dessert-cheesecake-ny':   'CAKE-NY',
   'dessert-choco-cake':      'CAKE-CHOC',
+  'bun-white':               'BUN-WHITE',
+  'bun-black':               'BUN-BLACK',
 }
 
 export async function POST(req: NextRequest) {
