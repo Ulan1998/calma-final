@@ -17,20 +17,20 @@ type P = Product & { sub: string; imgs: string[]; cat: string }
 const CP = (name: string) => `/catalog-preview/${name}.png`
 
 const PRODUCTS: P[] = [
-  // Круассаны без начинки — только "готовый" вид, парного фото нет
-  {id:'plain-micro', cat:'plain',  name:'Микро',             sub:'40 г · 25 шт/кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('croissant-plain-ready')]},
-  {id:'plain-mini',  cat:'plain',  name:'Мини',              sub:'60 г',             price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('croissant-plain-ready')]},
-  {id:'plain-mid',   cat:'plain',  name:'Средний',           sub:'90 г',             price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('croissant-plain-ready')]},
-  {id:'plain-big',   cat:'plain',  name:'Большой',           sub:'120 г',            price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('croissant-plain-ready')]},
-  {id:'plain-xl',    cat:'plain',  name:'XL',                sub:'150 г',            price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('croissant-plain-ready')]},
-  // Круассаны с начинкой — слайдер "готовый / замороженный" где есть оба фото
-  {id:'filled-micro',  cat:'filled', name:'Микро',           sub:'40 г · 10 шт/кг', price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('croissant-filled-micro-frozen')]},
-  {id:'chocolate',     cat:'filled', name:'Шоколад',         sub:'120 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1, imgs:[CP('croissant-chocolate-ready'), CP('croissant-chocolate-frozen')]},
-  {id:'hotdog',        cat:'filled', name:'Хот-дог',         sub:'120 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1, imgs:[CP('croissant-hotdog-ready'), CP('croissant-hotdog-frozen')]},
-  {id:'curd-berry',    cat:'filled', name:'Творог-клубника', sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('croissant-curd-strawberry-ready'), CP('croissant-curd-strawberry-frozen')]},
-  {id:'vanilla',       cat:'filled', name:'Ваниль',          sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('croissant-vanilla-ready'), CP('croissant-vanilla-frozen')]},
-  {id:'curd',          cat:'filled', name:'Творог',          sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('croissant-curd-ready'), CP('croissant-curd-frozen')]},
-  {id:'curd-orange',   cat:'filled', name:'Творог-апельсин', sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('croissant-curd-orange-ready'), CP('croissant-curd-orange-frozen')]},
+  // Круассаны без начинки — слайдер "готовый / замороженный"
+  {id:'plain-micro', cat:'plain',  name:'Микро',             sub:'40 г · 25 шт/кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('plain-micro-ready'), CP('plain-micro-frozen')]},
+  {id:'plain-mini',  cat:'plain',  name:'Мини',              sub:'60 г',             price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('plain-mini-ready'), CP('plain-mini-frozen')]},
+  {id:'plain-mid',   cat:'plain',  name:'Средний',           sub:'90 г',             price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('plain-mid-ready'), CP('plain-mid-frozen')]},
+  {id:'plain-big',   cat:'plain',  name:'Большой',           sub:'120 г',            price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('plain-big-ready'), CP('plain-big-frozen')]},
+  {id:'plain-xl',    cat:'plain',  name:'XL',                sub:'150 г',            price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('plain-xl-ready'), CP('plain-xl-frozen')]},
+  // Круассаны с начинкой — слайдер "готовый / замороженный"
+  {id:'filled-micro',  cat:'filled', name:'Микро',           sub:'40 г · 10 шт/кг', price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('filled-micro-ready'), CP('filled-micro-frozen')]},
+  {id:'chocolate',     cat:'filled', name:'Шоколад',         sub:'120 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1, imgs:[CP('chocolate-ready'), CP('chocolate-frozen')]},
+  {id:'hotdog',        cat:'filled', name:'Хот-дог',         sub:'120 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1, imgs:[CP('hotdog-ready'), CP('hotdog-frozen')]},
+  {id:'curd-berry',    cat:'filled', name:'Творог-клубника', sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('curd-berry-ready'), CP('curd-berry-frozen')]},
+  {id:'vanilla',       cat:'filled', name:'Ваниль',          sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('vanilla-ready'), CP('vanilla-frozen')]},
+  {id:'curd',          cat:'filled', name:'Творог',          sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('curd-ready'), CP('curd-frozen')]},
+  {id:'curd-orange',   cat:'filled', name:'Творог-апельсин', sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('curd-orange-ready'), CP('curd-orange-frozen')]},
   // Супы
   {id:'soup-borsch',   cat:'soups', name:'Борщ',           sub:'500 г', price:290, priceTypyn:29000, unit:'шт', minQty:1, imgs:[B[1]]},
   {id:'soup-solyanka', cat:'soups', name:'Солянка',        sub:'500 г', price:290, priceTypyn:29000, unit:'шт', minQty:1, imgs:[B[2]]},
