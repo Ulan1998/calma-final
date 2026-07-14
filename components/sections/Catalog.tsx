@@ -24,7 +24,7 @@ const PRODUCTS: P[] = [
   {id:'plain-big',   cat:'plain',  name:'Большой',           sub:'120 г',            price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('croissant-plain-ready')]},
   {id:'plain-xl',    cat:'plain',  name:'XL',                sub:'150 г',            price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('croissant-plain-ready')]},
   // Круассаны с начинкой — слайдер "готовый / замороженный" где есть оба фото
-  {id:'filled-micro',  cat:'filled', name:'Микро',           sub:'40 г · 10 шт/кг', price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('croissant-plain-ready')]},
+  {id:'filled-micro',  cat:'filled', name:'Микро',           sub:'40 г · 10 шт/кг', price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('croissant-filled-micro-frozen')]},
   {id:'chocolate',     cat:'filled', name:'Шоколад',         sub:'120 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1, imgs:[CP('croissant-chocolate-ready'), CP('croissant-chocolate-frozen')]},
   {id:'hotdog',        cat:'filled', name:'Хот-дог',         sub:'120 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1, imgs:[CP('croissant-hotdog-ready'), CP('croissant-hotdog-frozen')]},
   {id:'curd-berry',    cat:'filled', name:'Творог-клубника', sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('croissant-curd-strawberry-ready'), CP('croissant-curd-strawberry-frozen')]},
@@ -40,8 +40,8 @@ const PRODUCTS: P[] = [
   {id:'soup-anti',     cat:'soups', name:'Антипохмельный', sub:'500 г', price:260, priceTypyn:26000, unit:'шт', minQty:1, imgs:[B[1]]},
   {id:'soup-tomyam',   cat:'soups', name:'Том ям',         sub:'500 г', price:370, priceTypyn:37000, unit:'шт', minQty:1, imgs:[B[2]]},
   // Тесто
-  {id:'dough-croissant', cat:'dough', name:'Тесто для круассанов',   sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[B[3]]},
-  {id:'dough-samsa',     cat:'dough', name:'Тесто для самс слоеное', sub:'1 кг', price:250, priceTypyn:25000, unit:'кг', minQty:1, imgs:[B[2]]},
+  {id:'dough-croissant', cat:'dough', name:'Тесто для круассанов',   sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('dough-croissant')]},
+  {id:'dough-samsa',     cat:'dough', name:'Тесто для самс слоеное', sub:'1 кг', price:250, priceTypyn:25000, unit:'кг', minQty:1, imgs:[CP('dough-samsa')]},
   {id:'dough-viennese',  cat:'dough', name:'Венская выпечка',        sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[B[3]]},
   {id:'dough-napoleon',  cat:'dough', name:'Наполеон',                sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[B[4]]},
   // Киш
