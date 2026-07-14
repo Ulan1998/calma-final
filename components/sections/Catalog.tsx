@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Image from 'next/image'
 import { useCart } from '@/lib/cart-context'
 import type { Product } from '@/lib/config'
@@ -12,47 +12,49 @@ const B = [
   '/product-imgs/baked-4.jpg','/product-imgs/baked-5.jpg',
 ]
 
-type P = Product & { sub: string; img: string; cat: string }
+type P = Product & { sub: string; imgs: string[]; cat: string }
+
+const CP = (name: string) => `/catalog-preview/${name}.png`
 
 const PRODUCTS: P[] = [
-  // Круассаны без начинки
-  {id:'plain-micro', cat:'plain',  name:'Микро',             sub:'40 г · 25 шт/кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, img:'/croissant-plain.png'},
-  {id:'plain-mini',  cat:'plain',  name:'Мини',              sub:'60 г',             price:600, priceTypyn:60000, unit:'кг', minQty:1, img:'/croissant-plain.png'},
-  {id:'plain-mid',   cat:'plain',  name:'Средний',           sub:'90 г',             price:600, priceTypyn:60000, unit:'кг', minQty:1, img:'/croissant-plain.png'},
-  {id:'plain-big',   cat:'plain',  name:'Большой',           sub:'120 г',            price:600, priceTypyn:60000, unit:'кг', minQty:1, img:'/croissant-plain.png'},
-  {id:'plain-xl',    cat:'plain',  name:'XL',                sub:'150 г',            price:600, priceTypyn:60000, unit:'кг', minQty:1, img:'/croissant-plain.png'},
-  // Круассаны с начинкой
-  {id:'filled-micro',  cat:'filled', name:'Микро',           sub:'40 г · 10 шт/кг', price:650, priceTypyn:65000, unit:'кг', minQty:1, img:'/croissant-plain.png'},
-  {id:'chocolate',     cat:'filled', name:'Шоколад',         sub:'120 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1, img:'/croissant-chocolate.png'},
-  {id:'hotdog',        cat:'filled', name:'Хот-дог',         sub:'120 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1, img:'/croissant-hotdog.png'},
-  {id:'curd-berry',    cat:'filled', name:'Творог-клубника', sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, img:'/croissant-berry.png'},
-  {id:'vanilla',       cat:'filled', name:'Ваниль',          sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, img:'/croissant-vanilla.png'},
-  {id:'curd',          cat:'filled', name:'Творог',          sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, img:'/croissant-vanilla.png'},
-  {id:'curd-orange',   cat:'filled', name:'Творог-апельсин', sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, img:'/croissant-berry.png'},
+  // Круассаны без начинки — только "готовый" вид, парного фото нет
+  {id:'plain-micro', cat:'plain',  name:'Микро',             sub:'40 г · 25 шт/кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('croissant-plain-ready')]},
+  {id:'plain-mini',  cat:'plain',  name:'Мини',              sub:'60 г',             price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('croissant-plain-ready')]},
+  {id:'plain-mid',   cat:'plain',  name:'Средний',           sub:'90 г',             price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('croissant-plain-ready')]},
+  {id:'plain-big',   cat:'plain',  name:'Большой',           sub:'120 г',            price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('croissant-plain-ready')]},
+  {id:'plain-xl',    cat:'plain',  name:'XL',                sub:'150 г',            price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[CP('croissant-plain-ready')]},
+  // Круассаны с начинкой — слайдер "готовый / замороженный" где есть оба фото
+  {id:'filled-micro',  cat:'filled', name:'Микро',           sub:'40 г · 10 шт/кг', price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('croissant-plain-ready')]},
+  {id:'chocolate',     cat:'filled', name:'Шоколад',         sub:'120 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1, imgs:[CP('croissant-chocolate-ready'), CP('croissant-chocolate-frozen')]},
+  {id:'hotdog',        cat:'filled', name:'Хот-дог',         sub:'120 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1, imgs:[CP('croissant-hotdog-ready'), CP('croissant-hotdog-frozen')]},
+  {id:'curd-berry',    cat:'filled', name:'Творог-клубника', sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('croissant-curd-strawberry-ready'), CP('croissant-curd-strawberry-frozen')]},
+  {id:'vanilla',       cat:'filled', name:'Ваниль',          sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('croissant-vanilla-ready'), CP('croissant-vanilla-frozen')]},
+  {id:'curd',          cat:'filled', name:'Творог',          sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('croissant-curd-ready'), CP('croissant-curd-frozen')]},
+  {id:'curd-orange',   cat:'filled', name:'Творог-апельсин', sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1, imgs:[CP('croissant-curd-orange-ready'), CP('croissant-curd-orange-frozen')]},
   // Супы
-  {id:'soup-borsch',   cat:'soups', name:'Борщ',           sub:'500 г', price:290, priceTypyn:29000, unit:'шт', minQty:1, img:B[1]},
-  {id:'soup-solyanka', cat:'soups', name:'Солянка',        sub:'500 г', price:290, priceTypyn:29000, unit:'шт', minQty:1, img:B[2]},
-  {id:'soup-lentil',   cat:'soups', name:'Чечевичный',     sub:'500 г', price:260, priceTypyn:26000, unit:'шт', minQty:1, img:B[3]},
-  {id:'soup-pea',      cat:'soups', name:'Гороховый',      sub:'500 г', price:260, priceTypyn:26000, unit:'шт', minQty:1, img:B[4]},
-  {id:'soup-chicken',  cat:'soups', name:'Куриный',        sub:'500 г', price:260, priceTypyn:26000, unit:'шт', minQty:1, img:B[0]},
-  {id:'soup-anti',     cat:'soups', name:'Антипохмельный', sub:'500 г', price:260, priceTypyn:26000, unit:'шт', minQty:1, img:B[1]},
-  {id:'soup-tomyam',   cat:'soups', name:'Том ям',         sub:'500 г', price:370, priceTypyn:37000, unit:'шт', minQty:1, img:B[2]},
+  {id:'soup-borsch',   cat:'soups', name:'Борщ',           sub:'500 г', price:290, priceTypyn:29000, unit:'шт', minQty:1, imgs:[B[1]]},
+  {id:'soup-solyanka', cat:'soups', name:'Солянка',        sub:'500 г', price:290, priceTypyn:29000, unit:'шт', minQty:1, imgs:[B[2]]},
+  {id:'soup-lentil',   cat:'soups', name:'Чечевичный',     sub:'500 г', price:260, priceTypyn:26000, unit:'шт', minQty:1, imgs:[B[3]]},
+  {id:'soup-pea',      cat:'soups', name:'Гороховый',      sub:'500 г', price:260, priceTypyn:26000, unit:'шт', minQty:1, imgs:[B[4]]},
+  {id:'soup-chicken',  cat:'soups', name:'Куриный',        sub:'500 г', price:260, priceTypyn:26000, unit:'шт', minQty:1, imgs:[B[0]]},
+  {id:'soup-anti',     cat:'soups', name:'Антипохмельный', sub:'500 г', price:260, priceTypyn:26000, unit:'шт', minQty:1, imgs:[B[1]]},
+  {id:'soup-tomyam',   cat:'soups', name:'Том ям',         sub:'500 г', price:370, priceTypyn:37000, unit:'шт', minQty:1, imgs:[B[2]]},
   // Тесто
-  {id:'dough-croissant', cat:'dough', name:'Тесто для круассанов',   sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, img:B[3]},
-  {id:'dough-samsa',     cat:'dough', name:'Тесто для самс слоеное', sub:'1 кг', price:250, priceTypyn:25000, unit:'кг', minQty:1, img:B[2]},
-  {id:'dough-viennese',  cat:'dough', name:'Венская выпечка',        sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, img:B[3]},
-  {id:'dough-napoleon',  cat:'dough', name:'Наполеон',                sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, img:B[4]},
+  {id:'dough-croissant', cat:'dough', name:'Тесто для круассанов',   sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[B[3]]},
+  {id:'dough-samsa',     cat:'dough', name:'Тесто для самс слоеное', sub:'1 кг', price:250, priceTypyn:25000, unit:'кг', minQty:1, imgs:[B[2]]},
+  {id:'dough-viennese',  cat:'dough', name:'Венская выпечка',        sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[B[3]]},
+  {id:'dough-napoleon',  cat:'dough', name:'Наполеон',                sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, imgs:[B[4]]},
   // Киш
-  {id:'quiche-chicken', cat:'quiche', name:'Курица-грибы', sub:'', price:600, priceTypyn:60000, unit:'шт', minQty:1, img:B[1]},
-  {id:'quiche-salmon',  cat:'quiche', name:'Лосось-грибы', sub:'', price:600, priceTypyn:60000, unit:'шт', minQty:1, img:B[2]},
+  {id:'quiche-chicken', cat:'quiche', name:'Курица-грибы', sub:'', price:600, priceTypyn:60000, unit:'шт', minQty:1, imgs:[B[1]]},
+  {id:'quiche-salmon',  cat:'quiche', name:'Лосось-грибы', sub:'', price:600, priceTypyn:60000, unit:'шт', minQty:1, imgs:[B[2]]},
   // Десерты
-  {id:'dessert-cheesecake-sb',   cat:'dessert', name:'Чизкейк Сан Себастьян', sub:'1 порция · 170–185 г', price:210, priceTypyn:21000, unit:'шт', minQty:1, img:B[0]},
-  {id:'dessert-cheesecake-oreo', cat:'dessert', name:'Чизкейк Орео',          sub:'1 порция · 170–185 г', price:210, priceTypyn:21000, unit:'шт', minQty:1, img:B[1]},
-  {id:'dessert-cheesecake-ny',   cat:'dessert', name:'Чизкейк Нью-Йорк',     sub:'1 порция · 170–185 г', price:200, priceTypyn:20000, unit:'шт', minQty:1, img:B[2]},
-  {id:'dessert-choco-cake',      cat:'dessert', name:'Шоколадный торт',       sub:'1 порция · 170–185 г', price:220, priceTypyn:22000, unit:'шт', minQty:1, img:B[3]},
+  {id:'dessert-cheesecake-sb',   cat:'dessert', name:'Чизкейк Сан Себастьян', sub:'1 порция · 170–185 г', price:210, priceTypyn:21000, unit:'шт', minQty:1, imgs:[B[0]]},
+  {id:'dessert-cheesecake-oreo', cat:'dessert', name:'Чизкейк Орео',          sub:'1 порция · 170–185 г', price:210, priceTypyn:21000, unit:'шт', minQty:1, imgs:[B[1]]},
+  {id:'dessert-cheesecake-ny',   cat:'dessert', name:'Чизкейк Нью-Йорк',     sub:'1 порция · 170–185 г', price:200, priceTypyn:20000, unit:'шт', minQty:1, imgs:[B[2]]},
+  {id:'dessert-choco-cake',      cat:'dessert', name:'Шоколадный торт',       sub:'1 порция · 170–185 г', price:220, priceTypyn:22000, unit:'шт', minQty:1, imgs:[B[3]]},
   // Булочки
-  {id:'bun-white', cat:'buns', name:'Бургерная булочка белая', sub:'140 г', price:30, priceTypyn:3000, unit:'шт', minQty:1, img:B[4]},
-  {id:'bun-black', cat:'buns', name:'Черная булочка бургерная', sub:'140 г', price:32, priceTypyn:3200, unit:'шт', minQty:1, img:B[0]},
+  {id:'bun-white', cat:'buns', name:'Бургерная булочка белая', sub:'140 г', price:30, priceTypyn:3000, unit:'шт', minQty:1, imgs:[B[4]]},
+  {id:'bun-black', cat:'buns', name:'Черная булочка бургерная', sub:'140 г', price:32, priceTypyn:3200, unit:'шт', minQty:1, imgs:[B[0]]},
 ]
 
 const PMAP = Object.fromEntries(PRODUCTS.map(p => [p.id, p]))
@@ -72,6 +74,56 @@ const CATS: CatDef[] = [
 const fmt = (n: number) => n.toLocaleString('ru-RU')
 
 // ── Product card ─────────────────────────────────────────────────────────────
+
+function PCardImage({ imgs, alt }: { imgs: string[]; alt: string }) {
+  const [active, setActive] = useState(0)
+  const trackRef = useRef<HTMLDivElement>(null)
+
+  function onScroll() {
+    const el = trackRef.current
+    if (!el) return
+    const i = Math.round(el.scrollLeft / el.clientWidth)
+    setActive(i)
+  }
+
+  if (imgs.length <= 1) {
+    return (
+      <div className="relative bg-[#ede9e3]" style={{ aspectRatio: '3/4' }}>
+        <Image src={imgs[0]} alt={alt} fill className="object-cover" sizes="(max-width: 430px) 45vw, 200px" />
+      </div>
+    )
+  }
+
+  return (
+    <div className="relative bg-[#ede9e3]" style={{ aspectRatio: '3/4' }}>
+      <div
+        ref={trackRef}
+        onScroll={onScroll}
+        className="absolute inset-0 flex overflow-x-auto snap-x snap-mandatory"
+        style={{ scrollbarWidth: 'none' }}
+      >
+        {imgs.map((src, i) => (
+          <div key={src} className="relative shrink-0 w-full h-full snap-start">
+            <Image src={src} alt={alt} fill className="object-cover" sizes="(max-width: 430px) 45vw, 200px" />
+          </div>
+        ))}
+      </div>
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+        {imgs.map((_, i) => (
+          <span
+            key={i}
+            className="rounded-full transition-all"
+            style={{
+              width: i === active ? 14 : 6, height: 6,
+              background: i === active ? '#ab2b02' : 'rgba(255,255,255,0.85)',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.25)',
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
 
 function PCard({ p, qty, onPlus, onMinus }: {
   p: P
@@ -93,15 +145,7 @@ function PCard({ p, qty, onPlus, onMinus }: {
         outline: 'none',
       }}
     >
-      <div className="relative bg-[#ede9e3]" style={{ aspectRatio: '3/4' }}>
-        <Image
-          src={p.img}
-          alt={p.name}
-          fill
-          className="object-cover"
-          sizes="(max-width: 430px) 45vw, 200px"
-        />
-      </div>
+      <PCardImage imgs={p.imgs} alt={p.name} />
       <div className="flex flex-col flex-1 p-3 pb-4">
         <p className="font-body font-bold text-[var(--color-text)] mb-1" style={{ fontSize: '1rem', lineHeight: 1.25 }}>{p.name}</p>
         {p.sub && (
