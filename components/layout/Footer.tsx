@@ -100,12 +100,12 @@ export function Footer() {
               style={{ fontSize: '0.84rem', color: 'rgba(255,255,255,0.68)' }}
             >
               {PHONE_ICON}
-              +996 500 547 727
+              +996 503 880 503
             </a>
           </div>
 
           <a
-            href="https://2gis.kg/bishkek/geo/70000001115820962"
+            href="https://2gis.kg/bishkek/firm/70000001115820962/74.664431%2C42.861186"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 font-body transition-opacity hover:opacity-60"
@@ -115,7 +115,7 @@ export function Footer() {
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
               <circle cx="12" cy="10" r="3"/>
             </svg>
-            ж/м Кара-Жыгач, ул. Субан ата, 3
+            ж/м Кара-Жыгач, ул. Субан ата, 23
           </a>
         </div>
       </motion.div>

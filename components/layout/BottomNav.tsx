@@ -72,7 +72,7 @@ const CONTACTS = [
   { label: 'WhatsApp',   sublabel: CONFIG.PHONE, icon: WA_ICON,    href: CONFIG.WHATSAPP,                         color: '#25d366' },
   { label: 'Instagram',  sublabel: '@calma.kg',   icon: IG_ICON,    href: CONFIG.INSTAGRAM,                        color: '#E1306C' },
   { label: 'Позвонить', sublabel: CONFIG.PHONE,  icon: PHONE_ICON, href: `tel:${CONFIG.PHONE.replace(/\s/g, '')}`, color: '#ab2b02' },
-  { label: 'Мы на карте', sublabel: 'ж/м Кара-Жыгач, ул. Субан ата, 3', icon: MAP_ICON, href: 'https://2gis.kg/bishkek/geo/70000001115820962', color: '#3CB55E' },
+  { label: 'Мы на карте', sublabel: 'ж/м Кара-Жыгач, ул. Субан ата, 23', icon: MAP_ICON, href: 'https://2gis.kg/bishkek/firm/70000001115820962/74.664431%2C42.861186', color: '#3CB55E' },
 ]
 
 export function BottomNav() {
@@ -216,8 +216,7 @@ export function BottomNav() {
                 lineHeight: 1.45,
                 borderTop: '1px solid rgba(43,33,29,0.06)',
               }}>
-                ИП Матыева<br />
-                ж/м Кара-Жыгач, ул. Субан ата, дом 3
+                ИП Матыева
               </p>
             </div>
           </div>

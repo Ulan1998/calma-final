@@ -36,7 +36,7 @@ export function SchemaOrg() {
         image: 'https://calma.kg/hero-poster.jpg',
         description: 'Производитель и поставщик замороженной выпечки для кафе, ресторанов и отелей Бишкека. Круассаны, самсы, супы, мороженое — собственное производство.',
         url: 'https://calma.kg',
-        telephone: '+996500547727',
+        telephone: '+996503880503',
         priceRange: '$$',
         address: {
           '@type': 'PostalAddress',
