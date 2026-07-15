@@ -61,11 +61,18 @@ const PHONE_ICON = (
     <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 01.07 1.16 2 2 0 012.03 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
   </svg>
 )
+const MAP_ICON = (
+  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+    <circle cx="12" cy="10" r="3"/>
+  </svg>
+)
 
 const CONTACTS = [
   { label: 'WhatsApp',   sublabel: CONFIG.PHONE, icon: WA_ICON,    href: CONFIG.WHATSAPP,                         color: '#25d366' },
   { label: 'Instagram',  sublabel: '@calma.kg',   icon: IG_ICON,    href: CONFIG.INSTAGRAM,                        color: '#E1306C' },
   { label: 'Позвонить', sublabel: CONFIG.PHONE,  icon: PHONE_ICON, href: `tel:${CONFIG.PHONE.replace(/\s/g, '')}`, color: '#ab2b02' },
+  { label: 'Мы на карте', sublabel: 'ж/м Кара-Жыгач, ул. Субан ата, 3', icon: MAP_ICON, href: 'https://2gis.kg/bishkek/geo/70000001115820962', color: '#3CB55E' },
 ]
 
 export function BottomNav() {
@@ -200,6 +207,18 @@ export function BottomNav() {
                   </div>
                 </a>
               ))}
+              <p style={{
+                textAlign: 'center',
+                fontSize: '0.72rem',
+                color: '#9A8D82',
+                padding: '10px 20px 14px',
+                fontFamily: 'var(--font-body, sans-serif)',
+                lineHeight: 1.45,
+                borderTop: '1px solid rgba(43,33,29,0.06)',
+              }}>
+                ИП Матыева<br />
+                ж/м Кара-Жыгач, ул. Субан ата, дом 3
+              </p>
             </div>
           </div>
         </>

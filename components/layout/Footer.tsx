@@ -103,6 +103,20 @@ export function Footer() {
               +996 500 547 727
             </a>
           </div>
+
+          <a
+            href="https://2gis.kg/bishkek/geo/70000001115820962"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 font-body transition-opacity hover:opacity-60"
+            style={{ fontSize: '0.84rem', color: 'rgba(255,255,255,0.68)' }}
+          >
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            ж/м Кара-Жыгач, ул. Субан ата, 3
+          </a>
         </div>
       </motion.div>
 
@@ -111,7 +125,7 @@ export function Footer() {
         className="relative z-10 font-body uppercase tracking-[0.22em] text-center mt-10"
         style={{ fontSize: '0.66rem', color: 'rgba(255,255,255,0.28)' }}
       >
-        CALMA · Замороженные круассаны · Бишкек
+        CALMA · Замороженные круассаны · Бишкек · ИП Матыева
       </p>
     </footer>
   )
