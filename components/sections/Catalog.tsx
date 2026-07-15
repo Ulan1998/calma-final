@@ -23,20 +23,10 @@ const CP = (name: string) => `/catalog-preview/${name}.png`
 // целый круассан выше среза по кадру → стрелка идёт над самым верхним объектом
 const arrowTop = (objectTopPct: number) => Math.max(2, objectTopPct - 15)
 
-// Небольшой зазор между "целый" и "срез", чтобы пунктирные направляющие двух
-// стрелок не сливались в один "Х" на стыке, когда объекты стоят вплотную.
-const INNER_GAP = 1.5
-
-function readyPhoto(src: string, whole: [number, number, number], cut: [number, number, number], wholeCm: number, cutCm: number): Photo {
-  const [wLeft, wRight, wTop] = whole
-  const [cLeft, cRight, cTop] = cut
-  return {
-    src,
-    arrows: [
-      { leftPct: wLeft, rightPct: wRight - INNER_GAP, arrowY: arrowTop(wTop), guideEndY: wTop, label: `${wholeCm} см` },
-      { leftPct: cLeft + INNER_GAP, rightPct: cRight, arrowY: arrowTop(cTop), guideEndY: cTop, label: `${cutCm} см` },
-    ],
-  }
+// Готовый круассан — чистое фото без разметки, размеры показываем только
+// на замороженном варианте (см. frozenPhoto).
+function readyPhoto(src: string): Photo {
+  return { src }
 }
 
 function frozenPhoto(src: string, whole: [number, number, number], cm: number): Photo {
@@ -47,30 +37,30 @@ function frozenPhoto(src: string, whole: [number, number, number], cm: number): 
 const PRODUCTS: P[] = [
   // Круассаны без начинки — общее чистое фото, размеры разные по факту веса
   {id:'plain-micro', cat:'plain',  name:'Микро',             sub:'40 г · 25 шт/кг', price:600, priceTypyn:60000, unit:'кг', minQty:1,
-    photos:[readyPhoto(CP('croissant-plain-ready'), [4.14,49.91,34.53], [50,99.91,38.33], 8, 4.5), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 7)]},
+    photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 7)]},
   {id:'plain-mini',  cat:'plain',  name:'Мини',              sub:'60 г',             price:600, priceTypyn:60000, unit:'кг', minQty:1,
-    photos:[readyPhoto(CP('croissant-plain-ready'), [4.14,49.91,34.53], [50,99.91,38.33], 9, 5), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 8)]},
+    photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 8)]},
   {id:'plain-mid',   cat:'plain',  name:'Средний',           sub:'90 г',             price:600, priceTypyn:60000, unit:'кг', minQty:1,
-    photos:[readyPhoto(CP('croissant-plain-ready'), [4.14,49.91,34.53], [50,99.91,38.33], 13, 7), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 11)]},
+    photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 11)]},
   {id:'plain-big',   cat:'plain',  name:'Большой',           sub:'120 г',            price:600, priceTypyn:60000, unit:'кг', minQty:1,
-    photos:[readyPhoto(CP('croissant-plain-ready'), [4.14,49.91,34.53], [50,99.91,38.33], 15, 8), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 13)]},
+    photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 13)]},
   {id:'plain-xl',    cat:'plain',  name:'XL',                sub:'150 г',            price:600, priceTypyn:60000, unit:'кг', minQty:1,
-    photos:[readyPhoto(CP('croissant-plain-ready'), [4.14,49.91,34.53], [50,99.91,38.33], 18.5, 10), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 16)]},
+    photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 16)]},
   // Круассаны с начинкой — слайдер "готовый / замороженный"
   {id:'filled-micro',  cat:'filled', name:'Микро',           sub:'40 г · 10 шт/кг', price:650, priceTypyn:65000, unit:'кг', minQty:1,
-    photos:[readyPhoto(CP('croissant-plain-ready'), [4.14,49.91,34.53], [50,99.91,38.33], 8, 4.5), frozenPhoto(CP('croissant-filled-micro-frozen'), [23.11,82.97,41.51], 7)]},
+    photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-filled-micro-frozen'), [23.11,82.97,41.51], 7)]},
   {id:'chocolate',     cat:'filled', name:'Шоколад',         sub:'120 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1,
-    photos:[readyPhoto(CP('croissant-chocolate-ready'), [4.42,49.91,34.74], [50,98.8,39.5], 15, 8), frozenPhoto(CP('croissant-chocolate-frozen'), [9.39,99.91,40.68], 13)]},
+    photos:[readyPhoto(CP('croissant-chocolate-ready')), frozenPhoto(CP('croissant-chocolate-frozen'), [9.39,99.91,40.68], 13)]},
   {id:'hotdog',        cat:'filled', name:'Хот-дог',         sub:'120 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1,
-    photos:[readyPhoto(CP('croissant-hotdog-ready'), [3,49.91,34], [50,99.91,39], 15, 8), frozenPhoto(CP('croissant-hotdog-frozen'), [11.6,92.27,40.12], 13)]},
+    photos:[readyPhoto(CP('croissant-hotdog-ready')), frozenPhoto(CP('croissant-hotdog-frozen'), [11.6,92.27,40.12], 13)]},
   {id:'curd-berry',    cat:'filled', name:'Творог-клубника', sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1,
-    photos:[readyPhoto(CP('croissant-curd-strawberry-ready'), [2.95,49.91,37.22], [50,99.91,42.22], 13.5, 7.5), frozenPhoto(CP('croissant-curd-strawberry-frozen'), [10.04,99.91,40.54], 12)]},
+    photos:[readyPhoto(CP('croissant-curd-strawberry-ready')), frozenPhoto(CP('croissant-curd-strawberry-frozen'), [10.04,99.91,40.54], 12)]},
   {id:'vanilla',       cat:'filled', name:'Ваниль',          sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1,
-    photos:[readyPhoto(CP('croissant-vanilla-ready'), [4.88,49.91,40.19], [50,99.91,42.68], 13.5, 7.5), frozenPhoto(CP('croissant-vanilla-frozen'), [13.9,97.33,42.27], 12)]},
+    photos:[readyPhoto(CP('croissant-vanilla-ready')), frozenPhoto(CP('croissant-vanilla-frozen'), [13.9,97.33,42.27], 12)]},
   {id:'curd',          cat:'filled', name:'Творог',          sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1,
-    photos:[readyPhoto(CP('croissant-curd-ready'), [3.31,49.91,39.57], [50,99.91,44.57], 13.5, 7.5), frozenPhoto(CP('croissant-curd-frozen'), [10.41,96.69,38.88], 12)]},
+    photos:[readyPhoto(CP('croissant-curd-ready')), frozenPhoto(CP('croissant-curd-frozen'), [10.41,96.69,38.88], 12)]},
   {id:'curd-orange',   cat:'filled', name:'Творог-апельсин', sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1,
-    photos:[readyPhoto(CP('croissant-curd-orange-ready'), [2.95,49.91,43.44], [50,99.91,48.44], 13.5, 7.5), frozenPhoto(CP('croissant-curd-orange-frozen'), [10.41,97.88,38.05], 12)]},
+    photos:[readyPhoto(CP('croissant-curd-orange-ready')), frozenPhoto(CP('croissant-curd-orange-frozen'), [10.41,97.88,38.05], 12)]},
   // Супы
   {id:'soup-borsch',   cat:'soups', name:'Борщ',           sub:'500 г', price:290, priceTypyn:29000, unit:'шт', minQty:1, photos:[{src:B[1]}]},
   {id:'soup-solyanka', cat:'soups', name:'Солянка',        sub:'500 г', price:290, priceTypyn:29000, unit:'шт', minQty:1, photos:[{src:B[2]}]},
