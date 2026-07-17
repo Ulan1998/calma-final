@@ -83,8 +83,8 @@ const PRODUCTS: P[] = [
   {id:'dessert-cheesecake-ny',   cat:'dessert', name:'Чизкейк Нью-Йорк',     sub:'1 порция · 170–185 г', price:200, priceTypyn:20000, unit:'шт', minQty:1, photos:[{src:CP('dessert-ny')}]},
   {id:'dessert-choco-cake',      cat:'dessert', name:'Шоколадный торт',       sub:'1 порция · 170–185 г', price:220, priceTypyn:22000, unit:'шт', minQty:1, photos:[{src:CP('dessert-choco')}]},
   // Булочки
-  {id:'bun-white', cat:'buns', name:'Бургерная булочка белая', sub:'140 г', price:30, priceTypyn:3000, unit:'шт', minQty:1, photos:[{src:B[4]}]},
-  {id:'bun-black', cat:'buns', name:'Черная булочка бургерная', sub:'140 г', price:32, priceTypyn:3200, unit:'шт', minQty:1, photos:[{src:B[0]}]},
+  {id:'bun-white', cat:'buns', name:'Бургерная булочка белая', sub:'140 г', price:30, priceTypyn:3000, unit:'шт', minQty:1, photos:[{src:CP('bun-white')}]},
+  {id:'bun-black', cat:'buns', name:'Черная булочка бургерная', sub:'140 г', price:32, priceTypyn:3200, unit:'шт', minQty:1, photos:[{src:CP('bun-black')}]},
 ]
 
 const PMAP = Object.fromEntries(PRODUCTS.map(p => [p.id, p]))
