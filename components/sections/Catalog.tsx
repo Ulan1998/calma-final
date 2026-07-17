@@ -18,7 +18,10 @@ type Arrow = { leftPct: number; rightPct: number; arrowY: number; guideEndY: num
 type Photo = { src: string; arrows?: Arrow[] }
 type P = Product & { sub: string; photos: Photo[]; cat: string }
 
-const CP = (name: string) => `/catalog-preview/${name}.png`
+// Версия картинок каталога. Поднимать при замене любого фото — так у всех
+// устройств сбрасывается кэш и подтягивается свежая версия по новому URL.
+const IMG_VERSION = 2
+const CP = (name: string) => `/catalog-preview/${name}.png?v=${IMG_VERSION}`
 
 // целый круассан выше среза по кадру → стрелка идёт над самым верхним объектом
 const arrowTop = (objectTopPct: number) => Math.max(2, objectTopPct - 15)
