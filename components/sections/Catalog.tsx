@@ -38,13 +38,13 @@ const PRODUCTS: P[] = [
   // Круассаны без начинки — общее чистое фото, размеры разные по факту веса
   {id:'plain-micro', cat:'plain',  name:'Микро',             sub:'40 г · 25 шт/кг', price:600, priceTypyn:60000, unit:'кг', minQty:1,
     photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 7)]},
-  {id:'plain-mini',  cat:'plain',  name:'Мини',              sub:'60 г',             price:600, priceTypyn:60000, unit:'кг', minQty:1,
+  {id:'plain-mini',  cat:'plain',  name:'Мини',              sub:'60 г · 16–17 шт/кг',             price:600, priceTypyn:60000, unit:'кг', minQty:1,
     photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 8)]},
-  {id:'plain-mid',   cat:'plain',  name:'Средний',           sub:'90 г',             price:600, priceTypyn:60000, unit:'кг', minQty:1,
+  {id:'plain-mid',   cat:'plain',  name:'Средний',           sub:'90 г · 12–13 шт/кг',             price:600, priceTypyn:60000, unit:'кг', minQty:1,
     photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 11)]},
-  {id:'plain-big',   cat:'plain',  name:'Большой',           sub:'120 г',            price:600, priceTypyn:60000, unit:'кг', minQty:1,
+  {id:'plain-big',   cat:'plain',  name:'Большой',           sub:'120 г · 8–9 шт/кг',            price:600, priceTypyn:60000, unit:'кг', minQty:1,
     photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 13)]},
-  {id:'plain-xl',    cat:'plain',  name:'XL',                sub:'150 г',            price:600, priceTypyn:60000, unit:'кг', minQty:1,
+  {id:'plain-xl',    cat:'plain',  name:'XL',                sub:'150 г · 6–7 шт/кг',            price:600, priceTypyn:60000, unit:'кг', minQty:1,
     photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 16)]},
   // Круассаны с начинкой — слайдер "готовый / замороженный"
   {id:'chocolate',     cat:'filled', name:'Шоколад',         sub:'100 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1,
