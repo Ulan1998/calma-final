@@ -9,7 +9,7 @@ const fmt = (n: number) => n.toLocaleString('ru-RU')
 
 const CROISSANT_IDS = new Set([
   'plain-micro', 'plain-mini', 'plain-mid', 'plain-big', 'plain-xl',
-  'filled-micro', 'chocolate', 'hotdog', 'curd-berry', 'vanilla', 'curd', 'curd-orange',
+  'chocolate', 'hotdog', 'curd-berry', 'vanilla', 'curd', 'curd-orange',
 ])
 
 const WARN_ICON = (

@@ -47,9 +47,7 @@ const PRODUCTS: P[] = [
   {id:'plain-xl',    cat:'plain',  name:'XL',                sub:'150 г',            price:600, priceTypyn:60000, unit:'кг', minQty:1,
     photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 16)]},
   // Круассаны с начинкой — слайдер "готовый / замороженный"
-  {id:'filled-micro',  cat:'filled', name:'Микро',           sub:'40 г · 10 шт/кг', price:650, priceTypyn:65000, unit:'кг', minQty:1,
-    photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-filled-micro-frozen'), [23.11,82.97,41.51], 7)]},
-  {id:'chocolate',     cat:'filled', name:'Шоколад',         sub:'120 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1,
+  {id:'chocolate',     cat:'filled', name:'Шоколад',         sub:'100 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1,
     photos:[readyPhoto(CP('croissant-chocolate-ready')), frozenPhoto(CP('croissant-chocolate-frozen'), [9.39,99.91,40.68], 13)]},
   {id:'hotdog',        cat:'filled', name:'Хот-дог',         sub:'120 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1,
     photos:[readyPhoto(CP('croissant-hotdog-ready')), frozenPhoto(CP('croissant-hotdog-frozen'), [11.6,92.27,40.12], 13)]},
