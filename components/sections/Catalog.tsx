@@ -208,21 +208,29 @@ function PCardImage({ photos, alt }: { photos: Photo[]; alt: string }) {
   )
 }
 
-// Описание товара: свёрнуто до 2 строк, тап раскрывает — карточка не растёт столбом
+// Описание товара: свёрнуто до 2 строк + явная кнопка «ещё», чтобы было
+// понятно, что можно раскрыть; карточка не растёт столбом
 function PDesc({ text }: { text: string }) {
   const [open, setOpen] = useState(false)
   return (
-    <p
-      onClick={() => setOpen(o => !o)}
-      className="font-body text-[var(--color-muted)] mb-2"
-      style={{
-        fontSize: '0.72rem', lineHeight: 1.45, cursor: 'pointer',
-        display: '-webkit-box', WebkitBoxOrient: 'vertical',
-        WebkitLineClamp: open ? undefined : 2, overflow: 'hidden',
-      }}
-    >
-      {text}
-    </p>
+    <div className="mb-2" onClick={() => setOpen(o => !o)} style={{ cursor: 'pointer' }}>
+      <p
+        className="font-body text-[var(--color-muted)]"
+        style={{
+          fontSize: '0.72rem', lineHeight: 1.45,
+          display: '-webkit-box', WebkitBoxOrient: 'vertical',
+          WebkitLineClamp: open ? undefined : 2, overflow: 'hidden',
+        }}
+      >
+        {text}
+      </p>
+      <span
+        className="font-body font-semibold"
+        style={{ fontSize: '0.68rem', color: '#ab2b02', userSelect: 'none' }}
+      >
+        {open ? 'свернуть ▴' : 'ещё ▾'}
+      </span>
+    </div>
   )
 }
 
