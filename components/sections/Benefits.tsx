@@ -11,17 +11,8 @@ const START = TOTAL
 
 const BENEFITS = [
   {
-    title: 'Снижаете затраты на персонал',
-    text: 'Не требуется профессиональный пекарь — процесс освоит любой сотрудник за один день.',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
-        <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
-      </svg>
-    ),
-  },
-  {
-    title: 'Забудьте про списания',
-    text: 'Храните до 3 месяцев. Берёте ровно столько, сколько нужно — без лишних потерь.',
+    title: 'Минимум списаний',
+    text: 'Храните продукцию до 3 месяцев при −18 °C. Выпекайте ровно столько, сколько нужно именно сегодня.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
@@ -29,8 +20,17 @@ const BENEFITS = [
     ),
   },
   {
-    title: 'Расширяете меню без крупных затрат',
-    text: 'Круассаны, супы, тесто, мороженое, самсы, киш — широкий ассортимент замороженных позиций.',
+    title: 'Освобождаете время кухни',
+    text: 'Мы уже сделали сложную часть работы. Вашей команде остаётся только правильно разморозить и выпечь продукцию.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
+        <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+      </svg>
+    ),
+  },
+  {
+    title: 'Расширяете меню без крупных вложений',
+    text: 'Круассаны, слоёное тесто, булочки для бургеров и чизкейки — всё у одного поставщика.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
         <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
@@ -39,8 +39,8 @@ const BENEFITS = [
     ),
   },
   {
-    title: 'Удобная логистика',
-    text: 'Доставляем на авто-морозилках по Бишкеку и в регионы. Бесплатная доставка от 7 кг.',
+    title: 'Удобная доставка',
+    text: 'Доставляем в автоморозилках по Бишкеку и регионам. Бесплатная доставка по Бишкеку — от 7 кг, в регионы — от 15 кг.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
         <rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/>
@@ -50,7 +50,7 @@ const BENEFITS = [
   },
   {
     title: 'Работаем официально',
-    text: 'Предоставляем действующие декларации соответствия ЕАЭС и все документы о качестве.',
+    text: 'Декларация соответствия ЕАЭС, договоры поставки и полный комплект бухгалтерских документов.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
@@ -58,13 +58,11 @@ const BENEFITS = [
     ),
   },
   {
-    title: 'Полный пакет документов',
-    text: 'Счета на оплату, ЭСФ и вся необходимая бухгалтерская документация для юрлиц и ИП.',
+    title: 'Всегда рядом после покупки',
+    text: 'Проконсультируем, как правильно выпекать продукцию, подскажем идеи начинок и всегда останемся на связи.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/>
-        <line x1="16" y1="17" x2="8" y2="17"/>
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
       </svg>
     ),
   },
@@ -152,7 +150,7 @@ export function Benefits() {
         className="font-script text-center mb-0"
         style={{ fontSize: '2rem', fontStyle: 'italic', color: '#ab2b02', margin: 0, padding: '0 20px', fontFamily: 'var(--font-script)' }}
       >
-        Почему выбирают нас
+        Почему выбирают CALMA
       </motion.h2>
 
       {/* Decorative video — mobile only */}

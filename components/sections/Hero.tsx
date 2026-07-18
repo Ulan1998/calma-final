@@ -1,13 +1,12 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { CONFIG } from '@/lib/config'
 import { EASE } from '@/lib/motion'
 
 const STATS = [
-  { value: '75%',   label: 'расстойка' },
-  { value: '−40°C', label: 'шоковая заморозка' },
-  { value: 'от 3 кг', label: 'мин. заказ' },
+  { value: '7 кг',     label: 'бесплатная доставка' },
+  { value: '25 минут', label: 'выпечка до готовности' },
+  { value: 'от 3 кг',  label: 'минимальный заказ' },
 ]
 
 export function Hero() {
@@ -45,18 +44,18 @@ export function Hero() {
             className="font-body font-bold text-[var(--color-text)] mb-2 md:mb-4"
             style={{ fontSize: 'clamp(1.5rem, 3vw, 2.6rem)', lineHeight: 1.18, letterSpacing: '-0.025em', textWrap: 'balance' }}
           >
-            Замороженные круассаны для{' '}
-            <span style={{ color: '#ab2b02' }}>HoReCa</span>
+            Всё для свежей выпечки{' '}
+            <span style={{ color: '#ab2b02' }}>без лишних затрат</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, ease: EASE, delay: 0.3 }}
-            className="hidden md:block font-body text-[var(--color-muted)] mb-6"
-            style={{ fontSize: '1rem', lineHeight: 1.6 }}
+            className="font-body text-[var(--color-muted)] mb-3 md:mb-6"
+            style={{ fontSize: 'clamp(0.85rem, 1.2vw, 1rem)', lineHeight: 1.55, textWrap: 'balance' }}
           >
-            Поставщик замороженной выпечки для кафе и ресторанов Бишкека. Собственное производство, доставка на следующий день.
+            Замороженные круассаны, слоёное тесто, булочки для бургеров и чизкейки для HoReCa
           </motion.p>
 
           {/* Stats card */}
@@ -104,15 +103,12 @@ export function Hero() {
             >
               Выбрать продукцию
             </button>
-            <a
-              href={CONFIG.WHATSAPP}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-medium text-center font-body hover:opacity-70 transition-opacity underline underline-offset-6 py-4 md:py-0 md:flex md:items-center"
-              style={{ color: 'var(--color-muted)' }}
+            <p
+              className="text-center font-body font-medium py-3 md:py-0 md:flex md:items-center whitespace-nowrap"
+              style={{ color: 'var(--color-muted)', fontSize: 'clamp(0.72rem, 1.8vw, 0.85rem)' }}
             >
-              Написать в WhatsApp
-            </a>
+              Круассаны&nbsp;•&nbsp;Слоёное тесто&nbsp;•&nbsp;Булочки&nbsp;•&nbsp;Чизкейки
+            </p>
           </motion.div>
 
         </div>
