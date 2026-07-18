@@ -97,8 +97,8 @@ const CATS: CatDef[] = [
   { id:'croissants', label:'Замороженные круассаны', icon:'🥐',
     subs:[{id:'plain',label:'Без начинки'},{id:'filled',label:'С начинкой'}] },
   { id:'dough',      label:'Тесто',                   icon:'🫓', subs:[{id:'dough',label:null}] },
-  { id:'dessert',    label:'Десерты',                 icon:'🍰', subs:[{id:'dessert',label:null}] },
   { id:'buns',       label:'Булочки',                 icon:'🥯', subs:[{id:'buns',label:null}] },
+  { id:'dessert',    label:'Десерты',                 icon:'🍰', subs:[{id:'dessert',label:null}] },
 ]
 
 const fmt = (n: number) => n.toLocaleString('ru-RU')
@@ -468,15 +468,15 @@ export function Catalog() {
         className="font-script text-center mb-5"
         style={{ fontSize: '2rem', fontStyle: 'italic', color: '#ab2b02', fontFamily: 'var(--font-script)' }}
       >
-        Каталог
+        Что мы производим
       </h2>
 
-      <div
-        className="sticky top-2 z-10 mx-auto mb-4 w-fit max-w-full rounded-full px-4 py-2 text-center font-body font-semibold backdrop-blur"
-        style={{ background: 'rgba(171,43,2,0.08)', color: '#ab2b02', fontSize: '0.72rem' }}
+      <p
+        className="mx-auto mb-4 max-w-md text-center font-body"
+        style={{ color: 'var(--color-muted)', fontSize: '0.78rem', lineHeight: 1.55, textWrap: 'balance' }}
       >
-        Круассаны: мин. заказ 3 кг · Смешивать можно
-      </div>
+        Выберите категорию продукции и подберите формат, который лучше всего подойдёт для вашего заведения
+      </p>
 
       <div>
         {CATS.map(cat => (
