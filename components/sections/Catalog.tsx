@@ -16,7 +16,7 @@ const B = [
 // реальных фото — не на глаз), поэтому стрелка совпадает с фактическим краем.
 type Arrow = { leftPct: number; rightPct: number; arrowY: number; guideEndY: number; label: string }
 type Photo = { src: string; arrows?: Arrow[] }
-type P = Product & { sub: string; photos: Photo[]; cat: string }
+type P = Product & { sub: string; photos: Photo[]; cat: string; desc?: string }
 
 const CP = (name: string) => `/catalog-preview/${name}.png`
 
@@ -36,28 +36,28 @@ function frozenPhoto(src: string, whole: [number, number, number], cm: number): 
 
 const PRODUCTS: P[] = [
   // Круассаны без начинки — общее чистое фото, размеры разные по факту веса
-  {id:'plain-micro', cat:'plain',  name:'Микро',             sub:'40 г · 25 шт/кг', price:600, priceTypyn:60000, unit:'кг', minQty:1,
+  {id:'plain-micro', cat:'plain',  name:'Микро',             sub:'40 г · 25 шт/кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, desc:'Для кофе-брейков, кейтеринга, фуршетов и дегустационных сетов.',
     photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 7)]},
-  {id:'plain-mini',  cat:'plain',  name:'Мини',              sub:'60 г · 16–17 шт/кг',             price:600, priceTypyn:60000, unit:'кг', minQty:1,
+  {id:'plain-mini',  cat:'plain',  name:'Мини',              sub:'60 г · 16–17 шт/кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, desc:'Самый популярный формат для кофеен, завтраков и мини-сэндвичей.',
     photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 8)]},
-  {id:'plain-mid',   cat:'plain',  name:'Средний',           sub:'90 г · 12–13 шт/кг',             price:600, priceTypyn:60000, unit:'кг', minQty:1,
+  {id:'plain-mid',   cat:'plain',  name:'Средний',           sub:'90 г · 12–13 шт/кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, desc:'Универсальный размер для завтраков, десертов и классической подачи.',
     photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 11)]},
-  {id:'plain-big',   cat:'plain',  name:'Большой',           sub:'120 г · 8–9 шт/кг',            price:600, priceTypyn:60000, unit:'кг', minQty:1,
+  {id:'plain-big',   cat:'plain',  name:'Большой',           sub:'120 г · 8–9 шт/кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, desc:'Для сытных завтраков, авторских сэндвичей и основных блюд.',
     photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 13)]},
-  {id:'plain-xl',    cat:'plain',  name:'XL',                sub:'150 г · 6–7 шт/кг',            price:600, priceTypyn:60000, unit:'кг', minQty:1,
+  {id:'plain-xl',    cat:'plain',  name:'XL',                sub:'150 г · 6–7 шт/кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, desc:'Максимальный размер для эффектной подачи и фирменных блюд.',
     photos:[readyPhoto(CP('croissant-plain-ready')), frozenPhoto(CP('croissant-frozen-preview'), [10.22,94.11,36.26], 16)]},
   // Круассаны с начинкой — слайдер "готовый / замороженный"
-  {id:'chocolate',     cat:'filled', name:'Шоколад',         sub:'100 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1,
+  {id:'chocolate',     cat:'filled', name:'Шоколад',         sub:'100 г · 10 шт/кг', price:700, priceTypyn:70000, unit:'кг', minQty:1, desc:'Начинка из термостабильного бельгийского шоколада.',
     photos:[readyPhoto(CP('croissant-chocolate-ready')), frozenPhoto(CP('croissant-chocolate-frozen'), [9.39,99.91,40.68], 13)]},
-  {id:'hotdog',        cat:'filled', name:'Хот-дог',         sub:'120 г',            price:700, priceTypyn:70000, unit:'кг', minQty:1,
+  {id:'hotdog',        cat:'filled', name:'Хот-дог',         sub:'120 г · 8 шт/кг', price:700, priceTypyn:70000, unit:'кг', minQty:1, desc:'Начинка из халяльной сливочной сосиски.',
     photos:[readyPhoto(CP('croissant-hotdog-ready')), frozenPhoto(CP('croissant-hotdog-frozen'), [11.6,92.27,40.12], 13)]},
-  {id:'curd-berry',    cat:'filled', name:'Творог-клубника', sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1,
+  {id:'curd-berry',    cat:'filled', name:'Клубника',        sub:'100 г · 10 шт/кг', price:650, priceTypyn:65000, unit:'кг', minQty:1, desc:'Сочная творожно-ягодная начинка с натуральным вкусом клубники.',
     photos:[readyPhoto(CP('croissant-curd-strawberry-ready')), frozenPhoto(CP('croissant-curd-strawberry-frozen'), [10.04,99.91,40.54], 12)]},
-  {id:'vanilla',       cat:'filled', name:'Ваниль',          sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1,
+  {id:'vanilla',       cat:'filled', name:'Ваниль',          sub:'100 г · 10 шт/кг', price:650, priceTypyn:65000, unit:'кг', minQty:1, desc:'Нежная сливочно-ванильная начинка с мягким кремовым вкусом.',
     photos:[readyPhoto(CP('croissant-vanilla-ready')), frozenPhoto(CP('croissant-vanilla-frozen'), [13.9,97.33,42.27], 12)]},
-  {id:'curd',          cat:'filled', name:'Творог',          sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1,
+  {id:'curd',          cat:'filled', name:'Творог',          sub:'100 г · 10 шт/кг', price:650, priceTypyn:65000, unit:'кг', minQty:1, desc:'Нежная творожная начинка с мягким сливочным вкусом.',
     photos:[readyPhoto(CP('croissant-curd-ready')), frozenPhoto(CP('croissant-curd-frozen'), [10.41,96.69,38.88], 12)]},
-  {id:'curd-orange',   cat:'filled', name:'Творог-апельсин', sub:'100 г',            price:650, priceTypyn:65000, unit:'кг', minQty:1,
+  {id:'curd-orange',   cat:'filled', name:'Апельсин',        sub:'100 г · 10 шт/кг', price:650, priceTypyn:65000, unit:'кг', minQty:1, desc:'Освежающая творожно-цитрусовая начинка с лёгкой апельсиновой кислинкой.',
     photos:[readyPhoto(CP('croissant-curd-orange-ready')), frozenPhoto(CP('croissant-curd-orange-frozen'), [10.41,97.88,38.05], 12)]},
   // Супы
   {id:'soup-borsch',   cat:'soups', name:'Борщ',           sub:'500 г', price:290, priceTypyn:29000, unit:'шт', minQty:1, photos:[{src:B[1]}]},
@@ -68,21 +68,20 @@ const PRODUCTS: P[] = [
   {id:'soup-anti',     cat:'soups', name:'Антипохмельный', sub:'500 г', price:260, priceTypyn:26000, unit:'шт', minQty:1, photos:[{src:B[1]}]},
   {id:'soup-tomyam',   cat:'soups', name:'Том ям',         sub:'500 г', price:370, priceTypyn:37000, unit:'шт', minQty:1, photos:[{src:B[2]}]},
   // Тесто — одна фотография, без слайдера и без стрелок
-  {id:'dough-croissant', cat:'dough', name:'Тесто для круассанов',   sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, photos:[{src:CP('dough-croissant')}]},
-  {id:'dough-samsa',     cat:'dough', name:'Тесто для самс слоеное', sub:'1 кг', price:250, priceTypyn:25000, unit:'кг', minQty:1, photos:[{src:CP('dough-samsa')}]},
-  {id:'dough-viennese',  cat:'dough', name:'Венская выпечка',        sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, photos:[{src:CP('dough-viennese')}]},
-  {id:'dough-napoleon',  cat:'dough', name:'Наполеон',                sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, photos:[{src:CP('dough-napoleon')}]},
+  {id:'dough-croissant', cat:'dough', name:'Для круассанов',   sub:'1 кг', price:600, priceTypyn:60000, unit:'кг', minQty:1, desc:'Подходит для круассанов, данишей, слоек и другой венской выпечки.', photos:[{src:CP('dough-croissant')}]},
+  {id:'dough-napoleon',  cat:'dough', name:'Для «Наполеона»',  sub:'1 кг', price:550, priceTypyn:55000, unit:'кг', minQty:1, desc:'Бездрожжевое слоёное тесто для тортов, пирожных и десертов.', photos:[{src:CP('dough-napoleon')}]},
+  {id:'dough-samsa',     cat:'dough', name:'Для самсы',        sub:'1 кг', price:250, priceTypyn:25000, unit:'кг', minQty:1, desc:'Для самсы, пирожков и другой несладкой выпечки.', photos:[{src:CP('dough-samsa')}]},
   // Киш
   {id:'quiche-chicken', cat:'quiche', name:'Курица-грибы', sub:'', price:600, priceTypyn:60000, unit:'шт', minQty:1, photos:[{src:B[1]}]},
   {id:'quiche-salmon',  cat:'quiche', name:'Лосось-грибы', sub:'', price:600, priceTypyn:60000, unit:'шт', minQty:1, photos:[{src:B[2]}]},
   // Десерты
-  {id:'dessert-cheesecake-sb',   cat:'dessert', name:'Чизкейк Сан Себастьян', sub:'1 порция · 170–185 г', price:210, priceTypyn:21000, unit:'шт', minQty:1, photos:[{src:CP('dessert-san-sebastian')}]},
-  {id:'dessert-cheesecake-oreo', cat:'dessert', name:'Чизкейк Орео',          sub:'1 порция · 170–185 г', price:210, priceTypyn:21000, unit:'шт', minQty:1, photos:[{src:CP('dessert-oreo')}]},
-  {id:'dessert-cheesecake-ny',   cat:'dessert', name:'Чизкейк Нью-Йорк',     sub:'1 порция · 170–185 г', price:200, priceTypyn:20000, unit:'шт', minQty:1, photos:[{src:CP('dessert-ny')}]},
-  {id:'dessert-choco-cake',      cat:'dessert', name:'Шоколадный торт',       sub:'1 порция · 170–185 г', price:220, priceTypyn:22000, unit:'шт', minQty:1, photos:[{src:CP('dessert-choco')}]},
+  {id:'dessert-cheesecake-ny',   cat:'dessert', name:'Чизкейк «Нью-Йорк»',     sub:'1 кусок · 170–185 г', price:200, priceTypyn:20000, unit:'шт', minQty:1, desc:'Воздушный муссовый чизкейк на бисквитной основе с использованием халяль-желатина.', photos:[{src:CP('dessert-ny')}]},
+  {id:'dessert-cheesecake-oreo', cat:'dessert', name:'Чизкейк Oreo',           sub:'1 кусок · 170–185 г', price:210, priceTypyn:21000, unit:'шт', minQty:1, desc:'Нежный сливочно-шоколадный чизкейк с печеньем Oreo.', photos:[{src:CP('dessert-oreo')}]},
+  {id:'dessert-cheesecake-sb',   cat:'dessert', name:'Чизкейк «Сан-Себастьян»', sub:'1 кусок · 170–185 г', price:210, priceTypyn:21000, unit:'шт', minQty:1, desc:'Легендарный баскский чизкейк с карамелизированной корочкой и нежной кремовой серединой.', photos:[{src:CP('dessert-san-sebastian')}]},
+  {id:'dessert-choco-cake',      cat:'dessert', name:'Шоколадный торт',        sub:'1 кусок · 170–185 г', price:220, priceTypyn:22000, unit:'шт', minQty:1, desc:'Насыщенный шоколадный десерт с богатым вкусом какао.', photos:[{src:CP('dessert-choco')}]},
   // Булочки
-  {id:'bun-white', cat:'buns', name:'Бургерная булочка белая', sub:'140 г', price:30, priceTypyn:3000, unit:'шт', minQty:1, photos:[{src:CP('bun-white-2')}]},
-  {id:'bun-black', cat:'buns', name:'Черная булочка бургерная', sub:'140 г', price:32, priceTypyn:3200, unit:'шт', minQty:1, photos:[{src:CP('bun-black-2')}]},
+  {id:'bun-white', cat:'buns', name:'Белая', sub:'140 г', price:30, priceTypyn:3000, unit:'шт', minQty:1, desc:'Мягкая булочка для классических бургеров и сэндвичей.', photos:[{src:CP('bun-white-2')}]},
+  {id:'bun-black', cat:'buns', name:'Чёрная', sub:'140 г', price:32, priceTypyn:3200, unit:'шт', minQty:1, desc:'Эффектная булочка для фирменных и премиальных бургеров.', photos:[{src:CP('bun-black-2')}]},
 ]
 
 const PMAP = Object.fromEntries(PRODUCTS.map(p => [p.id, p]))
@@ -95,7 +94,7 @@ const CATS: CatDef[] = [
   { id:'croissants', label:'Замороженные круассаны', icon:'🥐',
     subs:[{id:'plain',label:'Без начинки'},{id:'filled',label:'С начинкой'}] },
   { id:'dough',      label:'Тесто',                   icon:'🫓', subs:[{id:'dough',label:null}] },
-  { id:'buns',       label:'Булочки',                 icon:'🥯', subs:[{id:'buns',label:null}] },
+  { id:'buns',       label:'Булочки для бургеров',                 icon:'🥯', subs:[{id:'buns',label:null}] },
   { id:'dessert',    label:'Десерты',                 icon:'🍰', subs:[{id:'dessert',label:null}] },
 ]
 
@@ -209,6 +208,24 @@ function PCardImage({ photos, alt }: { photos: Photo[]; alt: string }) {
   )
 }
 
+// Описание товара: свёрнуто до 2 строк, тап раскрывает — карточка не растёт столбом
+function PDesc({ text }: { text: string }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <p
+      onClick={() => setOpen(o => !o)}
+      className="font-body text-[var(--color-muted)] mb-2"
+      style={{
+        fontSize: '0.72rem', lineHeight: 1.45, cursor: 'pointer',
+        display: '-webkit-box', WebkitBoxOrient: 'vertical',
+        WebkitLineClamp: open ? undefined : 2, overflow: 'hidden',
+      }}
+    >
+      {text}
+    </p>
+  )
+}
+
 function PCard({ p, qty, onPlus, onMinus }: {
   p: P
   qty: number
@@ -240,6 +257,7 @@ function PCard({ p, qty, onPlus, onMinus }: {
         {!p.sub && (
           <p className="font-body font-bold mb-1" style={{ fontSize: '0.8rem', color: '#ab2b02' }}>{priceStr}</p>
         )}
+        {p.desc && <PDesc text={p.desc} />}
 
         {/* Counter */}
         <div className="mt-auto flex items-center justify-between rounded-full p-1" style={{ background: 'var(--color-bg)' }}>
