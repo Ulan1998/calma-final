@@ -7,11 +7,6 @@ import { isValidKGPhone } from '@/lib/validate-phone'
 
 const fmt = (n: number) => n.toLocaleString('ru-RU')
 
-const CROISSANT_IDS = new Set([
-  'plain-micro', 'plain-mini', 'plain-mid', 'plain-big', 'plain-xl',
-  'chocolate', 'hotdog', 'curd-berry', 'vanilla', 'curd', 'curd-orange',
-])
-
 const WARN_ICON = (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" width={15} height={15} style={{ flexShrink: 0 }}>
     <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
@@ -42,11 +37,9 @@ export function CartBar() {
   const phoneValid = isValidKGPhone(phone)
   const canSubmit = businessName.trim().length > 1 && phoneValid
 
-  const croissantKg = items
-    .filter(i => CROISSANT_IDS.has(i.product.id))
-    .reduce((s, i) => s + i.qty, 0)
-  const hasCroissants = items.some(i => CROISSANT_IDS.has(i.product.id))
-  const belowMin = hasCroissants && croissantKg < 3
+  // Минимум 3 кг больше не блокирует заказ (решение клиента 18.07.2026);
+  // «от 3 кг» остаётся только как надпись в hero.
+  const belowMin = false
 
   const handleToConfirm = (e: React.FormEvent) => {
     e.preventDefault()
