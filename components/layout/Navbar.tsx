@@ -36,14 +36,12 @@ export function Navbar() {
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="max-w-6xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
-        <a href="#" aria-label="CALMA — на главную" style={{ display: 'flex', alignItems: 'center' }}>
-          {/* multiply убирает бежевую подложку JPEG на светлом фоне */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/logo-calma.jpeg"
-            alt="CALMA — вкусно и спокойно"
-            style={{ height: 48, width: 'auto', mixBlendMode: 'multiply' }}
-          />
+        <a
+          href="#"
+          className="text-[#1C1412] tracking-[0.15em] text-sm font-medium uppercase"
+          style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', letterSpacing: '0.12em' }}
+        >
+          CALMA
         </a>
 
         {/* Desktop nav */}
