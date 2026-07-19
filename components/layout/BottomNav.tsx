@@ -3,7 +3,7 @@
 import type { ReactElement } from 'react'
 import { useEffect, useState } from 'react'
 import { useCart } from '@/lib/cart-context'
-import { CONFIG } from '@/lib/config'
+import { CONFIG, waLink } from '@/lib/config'
 
 const ICON_HOME = (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
@@ -69,7 +69,7 @@ const MAP_ICON = (
 )
 
 const CONTACTS = [
-  { label: 'WhatsApp',   sublabel: CONFIG.PHONE, icon: WA_ICON,    href: CONFIG.WHATSAPP,                         color: '#25d366' },
+  { label: 'WhatsApp',   sublabel: CONFIG.PHONE, icon: WA_ICON,    href: waLink(),                         color: '#25d366' },
   { label: 'Instagram',  sublabel: '@calma.kg',   icon: IG_ICON,    href: CONFIG.INSTAGRAM,                        color: '#E1306C' },
   { label: 'Позвонить', sublabel: CONFIG.PHONE,  icon: PHONE_ICON, href: `tel:${CONFIG.PHONE.replace(/\s/g, '')}`, color: '#ab2b02' },
   { label: 'Мы на карте', sublabel: 'ж/м Кара-Жыгач, ул. Субан ата, 23', icon: MAP_ICON, href: 'https://2gis.kg/bishkek/firm/70000001115820962/74.664431%2C42.861186', color: '#3CB55E' },

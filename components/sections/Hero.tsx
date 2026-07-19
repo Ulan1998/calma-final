@@ -5,8 +5,8 @@ import { EASE } from '@/lib/motion'
 
 const STATS = [
   { value: '7 кг',     label: 'бесплатная доставка' },
-  { value: '25 минут', label: 'выпечка до готовности' },
   { value: 'от 3 кг',  label: 'минимальный заказ' },
+  { value: '2 минуты', label: 'онлайн-заказ' },
 ]
 
 export function Hero() {
@@ -107,7 +107,7 @@ export function Hero() {
               className="text-center font-body font-medium py-3 md:py-0 md:flex md:items-center whitespace-nowrap"
               style={{ color: 'var(--color-muted)', fontSize: 'clamp(0.72rem, 1.8vw, 0.85rem)' }}
             >
-              Круассаны&nbsp;•&nbsp;Слоёное тесто&nbsp;•&nbsp;Булочки&nbsp;•&nbsp;Чизкейки
+              ✓&nbsp;Онлайн-заказ&nbsp;&nbsp;·&nbsp;&nbsp;✓&nbsp;Оплата по QR-коду
             </p>
           </motion.div>
 

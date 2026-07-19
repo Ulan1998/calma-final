@@ -9,6 +9,10 @@ export const CONFIG = {
   ADDRESS: 'Бишкек, Кыргызстан',
 }
 
+// WhatsApp-ссылка с préfill-текстом — чтобы менеджер видел, что пишут с сайта
+export const waLink = (text: string = 'Здравствуйте! Пишу с сайта calma.kg.') =>
+  `${CONFIG.WHATSAPP}?text=${encodeURIComponent(text)}`
+
 export type Product = {
   id: string
   name: string

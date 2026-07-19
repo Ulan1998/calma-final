@@ -1,11 +1,37 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useCart } from '@/lib/cart-context'
-import { CONFIG } from '@/lib/config'
+import { CONFIG, waLink } from '@/lib/config'
 import { isValidKGPhone } from '@/lib/validate-phone'
 
 const fmt = (n: number) => n.toLocaleString('ru-RU')
+
+// Последний заказ храним в localStorage: после оплаты и перезагрузки страницы
+// человек должен видеть «спасибо, заказ принят», а не пустую корзину.
+const LAST_ORDER_KEY = 'calma-last-order'
+type LastOrder = {
+  orderNumber: string
+  total: number
+  qrTransactionId: string
+  status: 'awaiting' | 'paid'
+  ts: number
+}
+const loadLastOrder = (): LastOrder | null => {
+  try {
+    const raw = localStorage.getItem(LAST_ORDER_KEY)
+    if (!raw) return null
+    const o = JSON.parse(raw) as LastOrder
+    if (Date.now() - o.ts > 24 * 3600_000) return null // старше суток не показываем
+    return o
+  } catch { return null }
+}
+const saveLastOrder = (o: LastOrder | null) => {
+  try {
+    if (o) localStorage.setItem(LAST_ORDER_KEY, JSON.stringify(o))
+    else localStorage.removeItem(LAST_ORDER_KEY)
+  } catch { /* приватный режим — не критично */ }
+}
 
 const WARN_ICON = (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" width={15} height={15} style={{ flexShrink: 0 }}>
@@ -15,7 +41,7 @@ const WARN_ICON = (
   </svg>
 )
 
-type FormState = 'cart' | 'idle' | 'confirm' | 'submitting'
+type FormState = 'cart' | 'idle' | 'confirm' | 'submitting' | 'awaiting' | 'paid'
 
 export function CartBar() {
   const { items, setQty, remove, total, clear, cartOpen, openCart, closeCart } = useCart()
@@ -26,6 +52,10 @@ export function CartBar() {
   const [formState, setFormState] = useState<FormState>('cart')
   const [error, setError] = useState('')
   const [isDesktop, setIsDesktop] = useState(false)
+  const [collapsed, setCollapsed] = useState(false)
+  const [order, setOrder] = useState<LastOrder | null>(null)
+  const [payUrl, setPayUrl] = useState('')
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
     const check = () => setIsDesktop(window.innerWidth >= 768)
@@ -33,6 +63,44 @@ export function CartBar() {
     window.addEventListener('resize', check, { passive: true })
     return () => window.removeEventListener('resize', check)
   }, [])
+
+  // После перезагрузки восстанавливаем последний заказ (ожидание/успех)
+  useEffect(() => {
+    const saved = loadLastOrder()
+    if (!saved) return
+    setOrder(saved)
+    setFormState(saved.status)
+    openCart()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const stopPolling = useCallback(() => {
+    if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null }
+  }, [])
+
+  // Поллинг статуса оплаты, пока заказ в ожидании (работает и при закрытой шторке)
+  useEffect(() => {
+    if (formState !== 'awaiting' && order?.status !== 'awaiting') return
+    if (!order?.qrTransactionId) return
+    pollRef.current = setInterval(async () => {
+      try {
+        const res = await fetch(`${CONFIG.PAYMENTS_URL}/status/${order.qrTransactionId}`)
+        if (!res.ok) return
+        const data = await res.json()
+        if (data.pay_status === 'COMPLETED') {
+          stopPolling()
+          const paid: LastOrder = { ...order, status: 'paid' }
+          setOrder(paid)
+          saveLastOrder(paid)
+          clear()
+          setFormState('paid')
+          openCart()
+        }
+      } catch { /* сеть мигнула — продолжаем */ }
+    }, 4000)
+    return stopPolling
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formState, order?.qrTransactionId])
 
   const phoneValid = isValidKGPhone(phone)
   const canSubmit = businessName.trim().length > 1 && phoneValid
@@ -81,7 +149,17 @@ export function CartBar() {
       const xpayUrl = payData.qr_code ?? payData.url ?? ''
       if (!xpayUrl) throw new Error('Не получена ссылка на оплату')
 
-      clear()
+      // Корзину НЕ чистим до подтверждения оплаты — иначе возврат на сайт
+      // выглядит как обнуление («скам-сценарий»). Чистим только после COMPLETED.
+      const awaiting: LastOrder = {
+        orderNumber: num, total,
+        qrTransactionId: payData.qr_transaction_id ?? '',
+        status: 'awaiting', ts: Date.now(),
+      }
+      setOrder(awaiting)
+      saveLastOrder(awaiting)
+      setPayUrl(xpayUrl)
+      setFormState('awaiting')
       window.open(xpayUrl, '_blank')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Не удалось отправить заказ.')
@@ -92,11 +170,21 @@ export function CartBar() {
   const closeForm = () => {
     if (formState === 'submitting') return
     closeCart()
-    setFormState('cart')
+    if (formState === 'paid') {
+      // Спасибо-экран закрыт — заказ завершён, сбрасываем сохранённое
+      saveLastOrder(null)
+      setOrder(null)
+      setFormState('cart')
+    } else if (formState !== 'awaiting') {
+      setFormState('cart')
+    }
+    // в awaiting состояние не трогаем: поллинг продолжается в фоне
     setError('')
   }
 
-  if (items.length === 0) {
+  const inPaymentFlow = formState === 'awaiting' || formState === 'paid'
+
+  if (items.length === 0 && !inPaymentFlow) {
     if (!cartOpen) return null
     return (
       <>
@@ -139,7 +227,9 @@ export function CartBar() {
 
   return (
     <>
-      <div style={{ height: 160 }} aria-hidden="true" />
+      {items.length > 0 && (
+      <>
+      <div style={{ height: collapsed ? 96 : 160 }} aria-hidden="true" />
 
       {/* CartBar strip */}
       <div
@@ -155,13 +245,36 @@ export function CartBar() {
         <div
           className="rounded-[22px] border border-[var(--color-border)]"
           style={{
+            position: 'relative',
             background: 'rgba(255,255,255,0.96)',
             backdropFilter: 'blur(18px)',
             WebkitBackdropFilter: 'blur(18px)',
             boxShadow: '0 16px 48px rgba(0,0,0,0.16)',
-            padding: '14px 16px',
+            padding: collapsed ? '10px 16px' : '14px 16px',
           }}
         >
+          {/* Свернуть/развернуть — чтобы корзина не закрывала сайт при просмотре */}
+          <button
+            onClick={() => setCollapsed(c => !c)}
+            aria-label={collapsed ? 'Развернуть корзину' : 'Свернуть корзину'}
+            style={{
+              position: 'absolute', top: -12, right: 14,
+              width: 28, height: 28, borderRadius: '50%',
+              background: '#fff', border: '1px solid var(--color-border)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.14)', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0,
+            }}
+          >
+            <svg
+              viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#1C1412"
+              strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"
+              style={{ transform: collapsed ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+            >
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+
+          {!collapsed && (
           <div style={{ maxHeight: 140, overflowY: 'auto', marginBottom: 10, display: 'flex', flexDirection: 'column', gap: 6 }}>
             {items.map(({ product, qty }) => (
               <div key={product.id} className="flex items-center gap-2">
@@ -189,8 +302,11 @@ export function CartBar() {
               </div>
             ))}
           </div>
+          )}
 
-          <div className="flex items-center justify-between gap-3 pt-2 border-t border-[var(--color-border)]">
+          <div
+            className={collapsed ? 'flex items-center justify-between gap-3' : 'flex items-center justify-between gap-3 pt-2 border-t border-[var(--color-border)]'}
+          >
             <div>
               <p className="font-body text-[var(--color-muted)] font-medium" style={{ fontSize: '0.76rem' }}>{items.length} позиц.</p>
               <p className="font-body font-bold text-[var(--color-text)]" style={{ fontSize: '1.12rem' }}>{fmt(total)} сом</p>
@@ -211,6 +327,8 @@ export function CartBar() {
           </div>
         </div>
       </div>
+      </>
+      )}
 
       {/* Bottom sheet */}
       {cartOpen && (
@@ -458,6 +576,84 @@ export function CartBar() {
                   </button>
                 )}
                 </div>
+              </div>
+            )}
+
+            {/* ── AWAITING PAYMENT ── */}
+            {formState === 'awaiting' && order && (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, padding: '8px 24px 44px', textAlign: 'center' }}>
+                <div
+                  className="animate-spin"
+                  style={{ width: 42, height: 42, borderRadius: '50%', border: '3px solid var(--color-border)', borderTopColor: '#ab2b02' }}
+                  aria-hidden="true"
+                />
+                <p className="font-body font-bold text-[var(--color-text)]" style={{ fontSize: '1.1rem' }}>
+                  Ожидаем подтверждение оплаты
+                </p>
+                <p className="font-body font-semibold" style={{ fontSize: '0.9rem', color: '#ab2b02' }}>
+                  Заказ №{order.orderNumber} · {fmt(order.total)} сом
+                </p>
+                <p className="font-body text-[var(--color-muted)]" style={{ fontSize: '0.82rem', lineHeight: 1.6, maxWidth: 320 }}>
+                  Оплатите на открывшейся странице банка. Как только платёж пройдёт — здесь появится подтверждение. Ваш заказ сохранён и никуда не пропадёт.
+                </p>
+                {payUrl && (
+                  <button
+                    onClick={() => window.open(payUrl, '_blank')}
+                    style={{
+                      width: '100%', maxWidth: 320, padding: '14px', borderRadius: 50, border: 'none',
+                      background: '#C9A84C', color: '#fff', fontSize: '0.9rem',
+                      fontFamily: 'var(--font-body, sans-serif)', fontWeight: 700, cursor: 'pointer',
+                      boxShadow: '0 4px 16px rgba(201,168,76,0.4)',
+                    }}
+                  >
+                    Открыть страницу оплаты ещё раз
+                  </button>
+                )}
+                <button
+                  onClick={closeForm}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-muted)', fontFamily: 'var(--font-body, sans-serif)', fontSize: '0.85rem' }}
+                >
+                  Продолжить просмотр сайта
+                </button>
+              </div>
+            )}
+
+            {/* ── PAID / THANK YOU ── */}
+            {formState === 'paid' && order && (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, padding: '8px 24px 44px', textAlign: 'center' }}>
+                <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#f0fdf4', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#16a34a" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+                <p className="font-body font-bold text-[var(--color-text)]" style={{ fontSize: '1.25rem' }}>
+                  Спасибо за заказ! 🎉
+                </p>
+                <p className="font-body font-semibold text-[var(--color-text)]" style={{ fontSize: '0.92rem' }}>
+                  Оплата получена. Заказ №{order.orderNumber} на {fmt(order.total)} сом принят.
+                </p>
+                <p className="font-body text-[var(--color-muted)]" style={{ fontSize: '0.84rem', lineHeight: 1.6, maxWidth: 330 }}>
+                  Наш менеджер свяжется с вами в ближайшее время, чтобы согласовать доставку.
+                </p>
+                <a
+                  href={waLink(`Здравствуйте! Оплатил(а) заказ №${order.orderNumber} на сумму ${fmt(order.total)} сом на сайте calma.kg.`)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-body"
+                  style={{
+                    width: '100%', maxWidth: 320, padding: '14px', borderRadius: 50,
+                    background: '#25d366', color: '#fff', fontSize: '0.9rem', fontWeight: 700,
+                    textDecoration: 'none', boxShadow: '0 4px 14px rgba(37,211,102,0.33)',
+                  }}
+                >
+                  Написать нам в WhatsApp
+                </a>
+                <button
+                  onClick={closeForm}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-muted)', fontFamily: 'var(--font-body, sans-serif)', fontSize: '0.85rem' }}
+                >
+                  Готово
+                </button>
               </div>
             )}
 

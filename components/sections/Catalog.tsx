@@ -75,10 +75,10 @@ const PRODUCTS: P[] = [
   {id:'quiche-chicken', cat:'quiche', name:'Курица-грибы', sub:'', price:600, priceTypyn:60000, unit:'шт', minQty:1, photos:[{src:B[1]}]},
   {id:'quiche-salmon',  cat:'quiche', name:'Лосось-грибы', sub:'', price:600, priceTypyn:60000, unit:'шт', minQty:1, photos:[{src:B[2]}]},
   // Десерты
-  {id:'dessert-cheesecake-ny',   cat:'dessert', name:'Чизкейк «Нью-Йорк»',     sub:'1 кусок · 170–185 г', price:200, priceTypyn:20000, unit:'шт', minQty:1, desc:'Воздушный муссовый чизкейк на бисквитной основе с использованием халяль-желатина.', photos:[{src:CP('dessert-ny')}]},
-  {id:'dessert-cheesecake-oreo', cat:'dessert', name:'Чизкейк Oreo',           sub:'1 кусок · 170–185 г', price:210, priceTypyn:21000, unit:'шт', minQty:1, desc:'Нежный сливочно-шоколадный чизкейк с печеньем Oreo.', photos:[{src:CP('dessert-oreo')}]},
-  {id:'dessert-cheesecake-sb',   cat:'dessert', name:'Чизкейк «Сан-Себастьян»', sub:'1 кусок · 170–185 г', price:210, priceTypyn:21000, unit:'шт', minQty:1, desc:'Легендарный баскский чизкейк с карамелизированной корочкой и нежной кремовой серединой.', photos:[{src:CP('dessert-san-sebastian')}]},
-  {id:'dessert-choco-cake',      cat:'dessert', name:'Шоколадный торт',        sub:'1 кусок · 170–185 г', price:220, priceTypyn:22000, unit:'шт', minQty:1, desc:'Насыщенный шоколадный десерт с богатым вкусом какао.', photos:[{src:CP('dessert-choco')}]},
+  {id:'dessert-cheesecake-ny',   cat:'dessert', name:'Чизкейк «Нью-Йорк»',     sub:'1 порция · 170–185 г', price:200, priceTypyn:20000, unit:'шт', minQty:1, desc:'Воздушный муссовый чизкейк на бисквитной основе с использованием халяль-желатина.', photos:[{src:CP('dessert-ny')}]},
+  {id:'dessert-cheesecake-oreo', cat:'dessert', name:'Чизкейк Oreo',           sub:'1 порция · 170–185 г', price:210, priceTypyn:21000, unit:'шт', minQty:1, desc:'Нежный сливочно-шоколадный чизкейк с печеньем Oreo.', photos:[{src:CP('dessert-oreo')}]},
+  {id:'dessert-cheesecake-sb',   cat:'dessert', name:'Чизкейк «Сан-Себастьян»', sub:'1 порция · 170–185 г', price:210, priceTypyn:21000, unit:'шт', minQty:1, desc:'Легендарный баскский чизкейк с карамелизированной корочкой и нежной кремовой серединой.', photos:[{src:CP('dessert-san-sebastian')}]},
+  {id:'dessert-choco-cake',      cat:'dessert', name:'Шоколадный торт',        sub:'1 порция · 170–185 г', price:220, priceTypyn:22000, unit:'шт', minQty:1, desc:'Насыщенный шоколадный десерт с богатым вкусом какао.', photos:[{src:CP('dessert-choco')}]},
   // Булочки
   {id:'bun-white', cat:'buns', name:'Белая', sub:'140 г', price:30, priceTypyn:3000, unit:'шт', minQty:1, desc:'Мягкая булочка для классических бургеров и сэндвичей.', photos:[{src:CP('bun-white-2')}]},
   {id:'bun-black', cat:'buns', name:'Чёрная', sub:'140 г', price:32, priceTypyn:3200, unit:'шт', minQty:1, desc:'Эффектная булочка для фирменных и премиальных бургеров.', photos:[{src:CP('bun-black-2')}]},

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '@/lib/cart-context'
-import { CONFIG } from '@/lib/config'
+import { waLink } from '@/lib/config'
 import { CartIcon } from '@/components/ui/icons'
 
 const links = [
@@ -73,7 +73,7 @@ export function Navbar() {
           )}
 
           <a
-            href={CONFIG.WHATSAPP}
+            href={waLink()}
             target="_blank"
             rel="noopener noreferrer"
             className="hidden md:inline-flex items-center gap-2 border border-[#E8DDD0] text-[#7A6B5D] text-sm px-4 py-2 rounded-full hover:border-[#8B4513] hover:text-[#8B4513] transition-colors duration-150"
@@ -116,7 +116,7 @@ export function Navbar() {
                 </a>
               ))}
               <a
-                href={CONFIG.WHATSAPP}
+                href={waLink()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#8B4513] font-medium"
