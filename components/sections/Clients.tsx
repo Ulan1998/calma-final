@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-const ROW1 = [1,2,3,4,5,6,7,8,16,18,21,22,23,27,28]
+const ROW1 = [1,2,4,5,6,7,8,16,18,21,22,23,27,28]
 const ROW2 = [9,10,11,12,13,14,15,17,19,24,25,26,29,30,1]
 
 // Doubled for seamless infinite loop (each row is 50% of full width)
