@@ -8,7 +8,7 @@ import { CartIcon } from '@/components/ui/icons'
 
 const links = [
   { label: 'Каталог', href: '#catalog' },
-  { label: 'О нас', href: '#about' },
+  { label: 'Почему с Calma выгодно', href: '#about' },
   { label: 'Партнёрство', href: '#how' },
   { label: 'Как заказать', href: '#faq' },
 ]
