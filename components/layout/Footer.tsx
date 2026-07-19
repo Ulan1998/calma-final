@@ -1,8 +1,10 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { waLink } from '@/lib/config'
 import { fadeUp } from '@/lib/motion'
+import { LegalSheet } from '@/components/ui/LegalSheet'
 
 const WA_ICON = (
   <svg viewBox="0 0 24 24" fill="#fff" width={20} height={20} aria-hidden="true">
@@ -11,8 +13,15 @@ const WA_ICON = (
 )
 
 export function Footer() {
+  const [legalOpen, setLegalOpen] = useState<string | null>(null)
+
   return (
-    <footer id="footer" className="relative overflow-hidden" style={{ padding: '56px 20px 48px' }}>
+    <footer
+      id="footer"
+      className="relative overflow-hidden"
+      // нижний отступ с запасом под мобильную навигацию — последняя ссылка кликается
+      style={{ padding: '56px 20px calc(96px + env(safe-area-inset-bottom, 0px))' }}
+    >
 
       {/* Background photo */}
       <div className="absolute inset-0" aria-hidden="true">
@@ -78,25 +87,34 @@ export function Footer() {
       {/* Юридические документы */}
       <nav
         aria-label="Юридические документы"
-        className="relative z-10 flex flex-wrap items-center justify-center mt-10"
-        style={{ gap: '10px 18px', padding: '0 12px' }}
+        className="relative z-10 flex flex-col items-center mt-10"
+        style={{ gap: 10, padding: '0 12px' }}
       >
+        <p
+          className="font-body font-semibold"
+          style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.85)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 2 }}
+        >
+          Юридические документы
+        </p>
         {[
-          { href: '/docs/oferta', label: 'Публичная оферта' },
-          { href: '/docs/dostavka', label: 'Условия доставки' },
-          { href: '/docs/privacy', label: 'Политика конфиденциальности' },
-          { href: '/docs/personal-data', label: 'Обработка персональных данных' },
+          { slug: 'oferta', label: 'Публичная оферта' },
+          { slug: 'dostavka', label: 'Условия оплаты и доставки' },
+          { slug: 'privacy', label: 'Политика конфиденциальности' },
+          { slug: 'personal-data', label: 'Согласие на обработку персональных данных' },
         ].map(d => (
           <a
-            key={d.href}
-            href={d.href}
+            key={d.slug}
+            href={`/docs/${d.slug}`}
+            onClick={e => { e.preventDefault(); setLegalOpen(d.slug) }}
             className="font-body transition-opacity hover:opacity-60"
-            style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.6)', textDecoration: 'underline', textUnderlineOffset: 3 }}
+            style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.65)', textDecoration: 'underline', textUnderlineOffset: 3, padding: '2px 6px' }}
           >
             {d.label}
           </a>
         ))}
       </nav>
+
+      <LegalSheet slug={legalOpen} onClose={() => setLegalOpen(null)} />
 
       {/* Copyright */}
       <p

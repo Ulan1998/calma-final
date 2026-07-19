@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { LEGAL_DOCS, getLegalDoc } from '@/lib/legal'
+import { LegalRender } from '@/components/ui/LegalRender'
 
 export function generateStaticParams() {
   return LEGAL_DOCS.map(d => ({ slug: d.slug }))
@@ -10,36 +11,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const doc = getLegalDoc(slug)
   return { title: doc ? `${doc.title} — CALMA` : 'Документ — CALMA' }
-}
-
-// Простой рендер: "## " — подзаголовок, "- " — пункт списка, остальное — абзац
-function renderBody(body: string) {
-  return body.split('\n\n').map((block, i) => {
-    if (block.startsWith('## ')) {
-      return (
-        <h2 key={i} className="font-body font-bold text-[var(--color-text)]" style={{ fontSize: '1.05rem', marginTop: 28, marginBottom: 10 }}>
-          {block.slice(3)}
-        </h2>
-      )
-    }
-    const lines = block.split('\n')
-    if (lines.every(l => l.startsWith('- '))) {
-      return (
-        <ul key={i} style={{ display: 'flex', flexDirection: 'column', gap: 8, paddingLeft: 0, listStyle: 'none' }}>
-          {lines.map((l, j) => (
-            <li key={j} className="font-body text-[var(--color-text)]" style={{ fontSize: '0.9rem', lineHeight: 1.75 }}>
-              {l.slice(2)}
-            </li>
-          ))}
-        </ul>
-      )
-    }
-    return (
-      <p key={i} className="font-body text-[var(--color-text)]" style={{ fontSize: '0.9rem', lineHeight: 1.75 }}>
-        {block}
-      </p>
-    )
-  })
 }
 
 export default async function LegalDocPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -68,8 +39,8 @@ export default async function LegalDocPage({ params }: { params: Promise<{ slug:
           Редакция от {doc.updated}
         </p>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 20 }}>
-          {renderBody(doc.body)}
+        <div style={{ marginTop: 20 }}>
+          <LegalRender body={doc.body} />
         </div>
 
         {/* Другие документы */}
