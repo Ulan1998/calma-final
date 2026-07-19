@@ -10,7 +10,7 @@ const links = [
   { label: 'Каталог', href: '#catalog' },
   { label: 'Почему с Calma выгодно', href: '#about' },
   { label: 'Партнёрство', href: '#how' },
-  { label: 'Как заказать', href: '#faq' },
+  { label: 'Бесплатная дегустация', href: '#footer' },
 ]
 
 export function Navbar() {
