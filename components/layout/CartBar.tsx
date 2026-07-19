@@ -15,6 +15,9 @@ type LastOrder = {
   total: number
   qrTransactionId: string
   payUrl?: string // ссылка на страницу оплаты — переживает перезагрузку
+  // снимок позиций на момент оформления — корзина после оплаты чистится,
+  // а для WhatsApp-чека нужен полный состав
+  items?: { name: string; qty: number; unit: string }[]
   status: 'awaiting' | 'paid'
   ts: number
 }
@@ -157,6 +160,7 @@ export function CartBar() {
         orderNumber: num, total,
         qrTransactionId: payData.qr_transaction_id ?? '',
         payUrl: xpayUrl,
+        items: items.map(i => ({ name: i.product.name, qty: i.qty, unit: i.product.unit })),
         status: 'awaiting', ts: Date.now(),
       }
       setOrder(awaiting)
@@ -654,7 +658,13 @@ export function CartBar() {
                   Наш менеджер свяжется с вами в ближайшее время, чтобы согласовать доставку.
                 </p>
                 <a
-                  href={waLink(`Здравствуйте! Оплатил(а) заказ №${order.orderNumber} на сумму ${fmt(order.total)} сом на сайте calma.kg.`)}
+                  href={waLink(
+                    `Здравствуйте! Оплатил(а) заказ №${order.orderNumber} на сайте calma.kg.\n\n` +
+                    (order.items?.length
+                      ? order.items.map(i => `• ${i.name} — ${i.qty} ${i.unit}`).join('\n') + '\n\n'
+                      : '') +
+                    `Итого: ${fmt(order.total)} сом`
+                  )}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-body"
