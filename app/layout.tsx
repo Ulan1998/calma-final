@@ -38,7 +38,13 @@ export const metadata: Metadata = {
     siteName: 'CALMA',
     locale: 'ru_KG',
     type: 'website',
-    images: [{ url: 'https://calma.kg/hero-poster.jpg', width: 1200, height: 630, alt: 'CALMA — замороженная выпечка для кафе Бишкека' }],
+    images: [{ url: 'https://calma.kg/og-calma.jpg', width: 1200, height: 630, alt: 'CALMA — вкусно и спокойно' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CALMA — Круассаны и выпечка для HoReCa | Бишкек',
+    description: 'Замороженные круассаны, слоёное тесто, булочки и чизкейки для HoReCa. Онлайн-заказ, оплата по QR.',
+    images: ['https://calma.kg/og-calma.jpg'],
   },
   robots: {
     index: true,
