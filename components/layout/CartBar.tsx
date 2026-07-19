@@ -14,6 +14,7 @@ type LastOrder = {
   orderNumber: string
   total: number
   qrTransactionId: string
+  payUrl?: string // ссылка на страницу оплаты — переживает перезагрузку
   status: 'awaiting' | 'paid'
   ts: number
 }
@@ -69,6 +70,7 @@ export function CartBar() {
     const saved = loadLastOrder()
     if (!saved) return
     setOrder(saved)
+    setPayUrl(saved.payUrl ?? '')
     setFormState(saved.status)
     openCart()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -154,6 +156,7 @@ export function CartBar() {
       const awaiting: LastOrder = {
         orderNumber: num, total,
         qrTransactionId: payData.qr_transaction_id ?? '',
+        payUrl: xpayUrl,
         status: 'awaiting', ts: Date.now(),
       }
       setOrder(awaiting)
@@ -614,6 +617,21 @@ export function CartBar() {
                   style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-muted)', fontFamily: 'var(--font-body, sans-serif)', fontSize: '0.85rem' }}
                 >
                   Продолжить просмотр сайта
+                </button>
+                <button
+                  onClick={() => {
+                    // Полный выход из режима ожидания: заказ остаётся в корзине,
+                    // можно оформить заново
+                    stopPolling()
+                    saveLastOrder(null)
+                    setOrder(null)
+                    setPayUrl('')
+                    setFormState('cart')
+                    closeCart()
+                  }}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ab2b02', fontFamily: 'var(--font-body, sans-serif)', fontSize: '0.82rem', textDecoration: 'underline', textUnderlineOffset: 3 }}
+                >
+                  Отменить и вернуться в корзину
                 </button>
               </div>
             )}
