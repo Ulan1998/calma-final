@@ -667,6 +667,15 @@ export function CartBar() {
                   )}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => {
+                    // Фиксатор: клиент написал Эльмире сам → ERP не будет слать дубль
+                    try {
+                      navigator.sendBeacon(
+                        `${CONFIG.ERP_API_ROOT}/site/order-contacted`,
+                        JSON.stringify({ number: order.orderNumber })
+                      )
+                    } catch { /* не критично */ }
+                  }}
                   className="font-body"
                   style={{
                     width: '100%', maxWidth: 320, padding: '14px', borderRadius: 50,

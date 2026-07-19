@@ -1,6 +1,7 @@
 export const CONFIG = {
   ERP_URL: 'https://erp.calma.kg/api/webhooks/site-order',
   ERP_API: 'https://erp.calma.kg/api/site/products',
+  ERP_API_ROOT: 'https://erp.calma.kg/api',
   ERP_SECRET: 'calma-site-2026',
   PAYMENTS_URL: 'https://erp.calma.kg/api/payments',
   WHATSAPP: 'https://wa.me/996503880503',
