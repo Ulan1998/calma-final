@@ -674,7 +674,7 @@ export function CartBar() {
                     textDecoration: 'none', boxShadow: '0 4px 14px rgba(37,211,102,0.33)',
                   }}
                 >
-                  Написать нам в WhatsApp
+                  Отправить заказ
                 </a>
                 <button
                   onClick={closeForm}
