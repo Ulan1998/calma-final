@@ -137,6 +137,7 @@ export function Benefits() {
 
   return (
     <section
+      id="about"
       aria-labelledby="benefits-heading"
       className="bg-[var(--color-bg)] pt-4 pb-7 md:py-14"
     >

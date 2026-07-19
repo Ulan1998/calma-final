@@ -6,7 +6,7 @@ import { EASE } from '@/lib/motion'
 const STATS = [
   { value: '7 кг',     label: 'бесплатная доставка' },
   { value: 'от 3 кг',  label: 'минимальный заказ' },
-  { value: '2 минуты', label: 'онлайн-заказ' },
+  { value: '2 минуты', label: 'заказ через сайт' },
 ]
 
 export function Hero() {
