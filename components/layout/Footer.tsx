@@ -75,9 +75,32 @@ export function Footer() {
         </div>
       </motion.div>
 
+      {/* Юридические документы */}
+      <nav
+        aria-label="Юридические документы"
+        className="relative z-10 flex flex-wrap items-center justify-center mt-10"
+        style={{ gap: '10px 18px', padding: '0 12px' }}
+      >
+        {[
+          { href: '/docs/oferta', label: 'Публичная оферта' },
+          { href: '/docs/dostavka', label: 'Условия доставки' },
+          { href: '/docs/privacy', label: 'Политика конфиденциальности' },
+          { href: '/docs/personal-data', label: 'Обработка персональных данных' },
+        ].map(d => (
+          <a
+            key={d.href}
+            href={d.href}
+            className="font-body transition-opacity hover:opacity-60"
+            style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.6)', textDecoration: 'underline', textUnderlineOffset: 3 }}
+          >
+            {d.label}
+          </a>
+        ))}
+      </nav>
+
       {/* Copyright */}
       <p
-        className="relative z-10 font-body uppercase tracking-[0.22em] text-center mt-10"
+        className="relative z-10 font-body uppercase tracking-[0.22em] text-center mt-5"
         style={{ fontSize: '0.66rem', color: 'rgba(255,255,255,0.6)' }}
       >
         CALMA · Продукция для HoReCa и ритейла · Бишкек · ИП Матыева
