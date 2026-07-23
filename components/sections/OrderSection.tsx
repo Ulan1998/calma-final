@@ -7,6 +7,7 @@ import { QrPaymentModal } from '@/components/ui/QrPaymentModal'
 import { CONFIG } from '@/lib/config'
 import { fadeUp } from '@/lib/motion'
 import { isValidKGPhone } from '@/lib/validate-phone'
+import { PhoneField, toFullKGPhone } from '@/components/ui/PhoneField'
 
 type FormState = 'idle' | 'submitting' | 'qr' | 'success'
 
@@ -21,7 +22,8 @@ export function OrderSection() {
   const [orderNumber, setOrderNumber] = useState('')
   const [error, setError] = useState('')
 
-  const phoneValid = isValidKGPhone(phone)
+  const fullPhone = toFullKGPhone(phone)
+  const phoneValid = isValidKGPhone(fullPhone)
   const canSubmit = items.length > 0 && businessName.trim().length > 1 && phoneValid
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -39,7 +41,7 @@ export function OrderSection() {
         },
         body: JSON.stringify({
           name: businessName.trim(),
-          phone: phone.trim(),
+          phone: fullPhone,
           notes: [
             address.trim() ? `Адрес: ${address.trim()}` : '',
             recipientName.trim() ? `Получатель: ${recipientName.trim()}` : '',
@@ -135,17 +137,9 @@ export function OrderSection() {
 
                 <div className="space-y-1">
                   <label className="font-body font-semibold text-[var(--color-muted)] uppercase tracking-widest" style={{ fontSize: '0.65rem' }}>Номер получателя</label>
-                  <input
-                    type="tel"
-                    value={phone}
-                    onChange={e => setPhone(e.target.value)}
-                    placeholder="+996 700 000 000"
-                    required
-                    aria-invalid={phone.trim().length > 0 && !phoneValid}
-                    className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-xl px-4 py-3 font-body text-sm text-[var(--color-text)] placeholder-[var(--color-border)] focus:outline-none focus:border-[#ab2b02] transition"
-                  />
+                  <PhoneField value={phone} onChange={setPhone} invalid={phone.trim().length > 0 && !phoneValid} />
                   {phone.trim().length > 0 && !phoneValid && (
-                    <p className="font-body text-xs text-red-500">Формат: +996 5XX XXXXXX</p>
+                    <p className="font-body text-xs text-red-500">Формат: 5XX XXXXXX или 7XX XXXXXX</p>
                   )}
                 </div>
 

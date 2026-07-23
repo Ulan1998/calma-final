@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CONFIG } from '@/lib/config'
 import { isValidKGPhone } from '@/lib/validate-phone'
+import { PhoneField, toFullKGPhone } from '@/components/ui/PhoneField'
 import { useTasting } from '@/lib/tasting-context'
 
 type FormState = 'idle' | 'submitting' | 'success'
@@ -26,7 +27,8 @@ export function TastingModal() {
   const [formState, setFormState] = useState<FormState>('idle')
   const [error, setError] = useState('')
 
-  const phoneValid = isValidKGPhone(phone)
+  const fullPhone = toFullKGPhone(phone)
+  const phoneValid = isValidKGPhone(fullPhone)
   const canSubmit = businessName.trim().length > 1 && phoneValid && formState !== 'submitting'
 
   const reset = () => {
@@ -49,7 +51,7 @@ export function TastingModal() {
           businessName: businessName.trim(),
           address: address.trim(),
           name: name.trim(),
-          phone: phone.trim(),
+          phone: fullPhone,
           role: role.trim(),
           city: city.trim(),
         }),
@@ -137,9 +139,9 @@ export function TastingModal() {
 
                 <div className="space-y-1">
                   <label className={labelCls} style={{ fontSize: '0.65rem' }}>Телефон *</label>
-                  <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder="+996 700 000 000" required aria-invalid={phone.trim().length > 0 && !phoneValid} className={inputCls} />
+                  <PhoneField value={phone} onChange={setPhone} invalid={phone.trim().length > 0 && !phoneValid} />
                   {phone.trim().length > 0 && !phoneValid && (
-                    <p className="font-body text-xs text-red-500">Формат: +996 5XX XXXXXX</p>
+                    <p className="font-body text-xs text-red-500">Формат: 5XX XXXXXX или 7XX XXXXXX</p>
                   )}
                 </div>
 
