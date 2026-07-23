@@ -1,4 +1,6 @@
 import { CartProvider } from '@/lib/cart-context'
+import { TastingProvider } from '@/lib/tasting-context'
+import { TastingModal } from '@/components/ui/TastingModal'
 import { CartBar } from '@/components/layout/CartBar'
 import { BottomNav } from '@/components/layout/BottomNav'
 import { Navbar } from '@/components/layout/Navbar'
@@ -13,6 +15,7 @@ import { Clients } from '@/components/sections/Clients'
 export default function Home() {
   return (
     <CartProvider>
+      <TastingProvider>
       <Navbar />
       <div
         id="app"
@@ -35,6 +38,8 @@ export default function Home() {
         <CartBar />
         <BottomNav />
       </div>
+      <TastingModal />
+      </TastingProvider>
     </CartProvider>
   )
 }

@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { waLink } from '@/lib/config'
 import { fadeUp } from '@/lib/motion'
+import { useTasting } from '@/lib/tasting-context'
 import { LegalSheet } from '@/components/ui/LegalSheet'
 
 const WA_ICON = (
@@ -14,6 +14,7 @@ const WA_ICON = (
 
 export function Footer() {
   const [legalOpen, setLegalOpen] = useState<string | null>(null)
+  const { open: openTasting } = useTasting()
 
   return (
     <footer
@@ -60,10 +61,9 @@ export function Footer() {
 
         {/* Right: CTA + contacts */}
         <div className="flex flex-col items-center md:items-end gap-4 shrink-0">
-          <a
-            href={waLink('Здравствуйте! Пишу с сайта calma.kg. Хочу получить бесплатные образцы продукции CALMA.')}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
+            onClick={openTasting}
             className="inline-flex items-center gap-2 rounded-full font-body font-bold transition-transform duration-150 active:scale-95 hover:scale-105"
             style={{
               padding: '16px 28px',
@@ -71,12 +71,13 @@ export function Footer() {
               color: '#fff',
               fontSize: '0.93rem',
               boxShadow: '0 6px 20px rgba(37,211,102,0.33)',
-              textDecoration: 'none',
+              border: 'none',
+              cursor: 'pointer',
             }}
           >
             {WA_ICON}
             Получить образцы продукции
-          </a>
+          </button>
 
           <p className="font-body" style={{ fontSize: '0.76rem', color: 'rgba(255,255,255,0.6)' }}>
             Доставка оплачивается отдельно

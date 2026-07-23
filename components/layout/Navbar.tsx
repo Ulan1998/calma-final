@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '@/lib/cart-context'
+import { useTasting } from '@/lib/tasting-context'
 import { waLink } from '@/lib/config'
 import { CartIcon } from '@/components/ui/icons'
 
@@ -10,13 +11,22 @@ const links = [
   { label: 'Каталог', href: '#catalog' },
   { label: 'Почему с Calma выгодно', href: '#about' },
   { label: 'Партнёрство', href: '#how' },
-  { label: 'Бесплатная дегустация', href: '#footer' },
+  { label: 'Бесплатная дегустация', href: '#tasting' },
 ]
 
 export function Navbar() {
   const { count } = useCart()
+  const { open: openTasting } = useTasting()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+
+  const handleNav = (e: React.MouseEvent, href: string) => {
+    if (href === '#tasting') {
+      e.preventDefault()
+      openTasting()
+    }
+    setOpen(false)
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -51,6 +61,7 @@ export function Navbar() {
             <a
               key={link.href}
               href={link.href}
+              onClick={e => handleNav(e, link.href)}
               className="text-sm text-[#7A6B5D] hover:text-[#1C1412] transition-colors duration-150 font-medium"
             >
               {link.label}
@@ -110,7 +121,7 @@ export function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={() => setOpen(false)}
+                  onClick={e => handleNav(e, link.href)}
                   className="text-[#1C1412] font-medium py-1"
                 >
                   {link.label}
